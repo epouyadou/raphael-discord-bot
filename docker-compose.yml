@@ -1,0 +1,43 @@
+name: raphael
+
+services:
+  backend:
+    container_name: raphael-backend
+    image: raphael-backend:dev
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend-dev.Dockerfile
+      tags:
+        - "raphael-backend:dev"
+    volumes:
+      # Mount the source code into the container, this allows for hot reloading
+      - ./backend/src:/app/src
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-database}
+      DB_NAME: ${DB_NAME:-database}
+      DB_USER: ${DB_USER:-database}
+      DB_USER_PASSWORD: ${DB_USER_PASSWORD:-database}
+    ports:
+      - "8080:3000"
+    depends_on:
+      # Wait for the database to be ready before starting the backend
+      - postgres
+
+  postgres:
+    container_name: raphael-postgresql
+    image: postgres:16.8
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-database}
+      DB_NAME: ${DB_NAME:-database}
+      DB_USER: ${DB_USER:-database}
+      DB_USER_PASSWORD: ${DB_USER_PASSWORD:-database}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./database/postgres-init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+      - ./database:/datamodel
+      - pg_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  pg_data:
