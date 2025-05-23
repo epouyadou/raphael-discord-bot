@@ -22,7 +22,7 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
-Discord bot backen made with Nestjs.
+Discord bot backen made with Nestjs and Necord package.
 
 ## Project setup
 
