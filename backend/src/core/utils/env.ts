@@ -2,7 +2,12 @@ import { z } from 'zod';
 
 export const environmentSchema = z.object({
   DISCORD_TOKEN: z.string().min(1),
-  DISCORD_DEVELOPMENT_GUILD_ID: z.string().min(1),
+  DISCORD_DEVELOPMENT_GUILD_IDs: z
+    .string()
+    .min(1)
+    .transform((val) => {
+      return val.split(',').map((id) => id.trim());
+    }),
   POSTGRES_DB_USER: z.string().min(1),
   POSTGRES_DB_NAME: z.string().min(1),
   POSTGRES_PASSWORD: z.string().min(1),

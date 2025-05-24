@@ -19,7 +19,7 @@ import { getEnv } from './core/utils/env';
         IntentsBitField.Flags.DirectMessages,
         IntentsBitField.Flags.MessageContent,
       ],
-      development: [getEnv('DISCORD_DEVELOPMENT_GUILD_ID')],
+      development: getEnv('DISCORD_DEVELOPMENT_GUILD_IDs'),
     }),
     AppCommandsModule,
   ],
