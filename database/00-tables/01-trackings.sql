@@ -1,25 +1,26 @@
 
-CREATE IF NOT EXISTS TABLE raphaeldb.user_trackings (
+CREATE TABLE IF NOT EXISTS raphaeldb.user_tracking_orders (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
-    guild_channel_id INT NOT NULL,
-    guild_member_id INT NOT NULL,
-    CONSTRAINT uc_tracked_user UNIQUE (user_id, guild_channel_id, guild_member_id)
+    user_id VARCHAR(64) NOT NULL,
+    guild_id VARCHAR(64) NOT NULL,
+    guild_member_id VARCHAR(64) NOT NULL,
+    CONSTRAINT uc_tracked_user UNIQUE (user_id, guild_member_id)
 );
 
-CREATE IF NOT EXISTS TABLE raphaeldb.role_trackings (
+CREATE TABLE IF NOT EXISTS raphaeldb.role_tracking_orders (
     id SERIAL PRIMARY KEY,
-    user_id INT NOT NULL,
-    guild_channel_id INT NOT NULL,
-    guild_role_id INT NOT NULL,
-    CONSTRAINT uc_tracked_role UNIQUE (user_id, guild_channel_id, guild_role_id)
+    user_id VARCHAR(64) NOT NULL,
+    guild_id VARCHAR(64) NOT NULL,
+    guild_role_id VARCHAR(64) NOT NULL,
+    CONSTRAINT uc_tracked_role UNIQUE (user_id, guild_role_id)
 );
 
-CREATE IF NOT EXISTS TABLE raphaeldb.voice_channel_status_records (
+CREATE TABLE IF NOT EXISTS raphaeldb.voice_channel_status_records (
     id SERIAL PRIMARY KEY,
-    guild_member_id INT NOT NULL,
-    guild_channel_id INT NOT NULL,
-    is_connected BOOLEAN NOT NULL,
+    guild_member_id VARCHAR(64) NOT NULL,
+    guild_id VARCHAR(64) NOT NULL,
+    from_guild_channel_id VARCHAR(64),
+    to_guild_channel_id VARCHAR(64),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

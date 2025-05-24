@@ -28,7 +28,7 @@ services:
     image: postgres:16.8
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-database}
-      DB_NAME: ${DB_NAME:-database}
+      DB_NAME: ${DB_NAME:-raphaeldb}
       DB_USER: ${DB_USER:-database}
       DB_USER_PASSWORD: ${DB_USER_PASSWORD:-database}
     ports:
