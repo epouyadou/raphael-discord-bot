@@ -21,10 +21,10 @@ export class NotifyMeOnVoiceChannelConnectionListeners {
   async onVoiceChannelJoin(
     @Context() [member, voiceChannel]: ContextOf<'voiceChannelJoin'>,
   ) {
-    // TODO: Implement the logic to notify the user when someone connects to the voice channel
     // When a user connects to a voice channel, check if they are being tracked (id or role)
     // If they are, send a message to the users who are tracking them
     // If the user is not being tracked, do nothing
+    // If the user is already in the same voice channel, do nothing
 
     this.logger.log(
       `User ${member.id} joined voice channel ${voiceChannel.id}`,
