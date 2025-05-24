@@ -2,7 +2,7 @@ Scaffold backend with:
 - docker compose for development and production
 - PostgreSQL 16
 - Nest JS
-- CI with Github Actions
+- CI with Github Actions (TODO)
 - Hot Reload in development
 
 ## Prerequisites
