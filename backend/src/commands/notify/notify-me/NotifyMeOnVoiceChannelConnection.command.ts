@@ -1,5 +1,5 @@
 import { Logger } from '@nestjs/common';
-import { GuildMember, User } from 'discord.js';
+import { GuildMember, MessageFlags, User } from 'discord.js';
 import { Context, Options, SlashCommandContext, Subcommand } from 'necord';
 import { NotifyCommandsDecorator } from '../notify-commands.service';
 import { NotifyMeOnVoiceChannelConnectionDto } from './NotifyMeOnVoiceChannelConnection.dto';
@@ -28,7 +28,7 @@ export class NotifyMeOnVoiceChannelConnectionCommand {
     if (mentionable instanceof User || interaction.guild === null) {
       await interaction.reply({
         content: 'You cannot track non guild members.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -37,7 +37,7 @@ export class NotifyMeOnVoiceChannelConnectionCommand {
     if (mentionable.id === member.id) {
       await interaction.reply({
         content: 'You cannot track yourself.',
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
       return;
     }
@@ -53,7 +53,7 @@ export class NotifyMeOnVoiceChannelConnectionCommand {
       );
       await interaction.reply({
         content: `You will be notified when ${mentionable.displayName} connects to a vocal channel.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     } else {
       await this.notifyMeOnVoiceChannelConnectionService.trackRole(
@@ -66,7 +66,7 @@ export class NotifyMeOnVoiceChannelConnectionCommand {
       );
       await interaction.reply({
         content: `You will be notified when someone with the ${mentionable.name} role connects to a vocal channel.`,
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       });
     }
   }
