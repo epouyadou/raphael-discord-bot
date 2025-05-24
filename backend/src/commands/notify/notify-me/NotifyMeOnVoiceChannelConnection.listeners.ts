@@ -3,7 +3,7 @@ import { Client } from 'discord.js';
 import { Context, ContextOf, On } from 'necord';
 import { PostgresPool } from 'src/core/postgres/postgres';
 import { NotifyMeOnVoiceChannelConnectionService } from './NotifyMeOnVoiceChannelConnection.service';
-import { UserTrackingOrder } from './types';
+import { RoleTrackingOrder, UserTrackingOrder } from './types';
 
 export class NotifyMeOnVoiceChannelConnectionListeners {
   private readonly logger = new Logger(
@@ -48,8 +48,8 @@ export class NotifyMeOnVoiceChannelConnectionListeners {
     );
 
     const findUserTrackingMemberRoleQuery = `
-      SELECT user_id FROM raphaeldb.role_tracking_orders
-      WHERE guild_Id = $1 AND guild_role_id = $2`;
+      SELECT user_id, guild_role_id FROM raphaeldb.role_tracking_orders
+      WHERE guild_Id = $1`;
     const findUserTrackingMemberRoleQueryResult = await this.postgres.query(
       findUserTrackingMemberRoleQuery,
       [voiceChannel.guildId, member.id],
@@ -72,7 +72,7 @@ export class NotifyMeOnVoiceChannelConnectionListeners {
       findUserTrackingMemberRoleQueryResult.rowCount > 0
     ) {
       // Notify the user
-      findUserTrackingMemberRoleQueryResult.rows.map((row: UserTrackingOrder) =>
+      findUserTrackingMemberRoleQueryResult.rows.map((row: RoleTrackingOrder) =>
         userIds.push(row.user_id),
       );
     }

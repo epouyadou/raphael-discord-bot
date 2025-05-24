@@ -1,4 +1,3 @@
-import { Logger } from '@nestjs/common';
 import { Pool, PoolClient } from 'pg';
 import { v4 as uuidv4 } from 'uuid';
 import { getEnv } from '../utils/env';
@@ -8,16 +7,6 @@ export function getPool() {
   if (pool) {
     return pool;
   }
-
-  const logger: Logger = new Logger('PostgresPool');
-  logger.log('Creating new PostgresPool instance');
-  logger.log('Connecting to Postgres with the following configuration:');
-  logger.log(`User: ${getEnv('POSTGRES_DB_USER')}`);
-  logger.log(`Database: ${getEnv('POSTGRES_DB_NAME')}`);
-  logger.log(`Password: ${getEnv('POSTGRES_PASSWORD')}`);
-  logger.log(`Host: ${getEnv('POSTGRES_HOST')}`);
-  logger.log(`Port: ${getEnv('POSTGRES_PORT')}`);
-  logger.log(`SSL: ${getEnv('POSTGRES_SSL') ? 'enabled' : 'disabled'}`);
 
   pool = new PostgresPool(
     new Pool({
