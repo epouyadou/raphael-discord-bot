@@ -18,4 +18,23 @@ export class TypedResult<TValue> extends Result {
     }
     return this._value;
   }
+
+  static typeSuccess<TValue>(value: TValue): TypedResult<TValue> {
+    return new TypedResult<TValue>(value, true, BotError.None);
+  }
+
+  static typedFailure<TValue>(error: BotError): TypedResult<TValue> {
+    return new TypedResult<TValue>(undefined, false, error);
+  }
+
+  static create<TValue>(
+    value?: TValue,
+    error: BotError = BotError.None,
+  ): Result {
+    if (value === undefined || value === null) {
+      return this.typedFailure(error);
+    } else {
+      return this.typeSuccess(value);
+    }
+  }
 }

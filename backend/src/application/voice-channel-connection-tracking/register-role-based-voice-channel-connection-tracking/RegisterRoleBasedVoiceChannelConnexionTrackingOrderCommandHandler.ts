@@ -1,10 +1,15 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { IDateTime } from 'src/application/abstractions/common/IDateTime';
-import { Maybe } from 'src/domain/core/primitives/Maybe';
-import { Result } from 'src/domain/core/primitives/Result';
-import { IRoleBasedVoiceChannelConnectionTrackingOrdersRepository } from 'src/domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
-import { RoleBasedVoiceChannelConnectionTrackingOrder } from 'src/domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
-import { VoiceChannelConnectionTrackingOrderDomainErrors } from 'src/domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
+import {
+  IDateTime,
+  IDateTimeSymbol,
+} from '@application/abstractions/common/IDateTime';
+import { Result } from '@domain/core/primitives/Result';
+import {
+  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+} from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
+import { RoleBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
+import { VoiceChannelConnectionTrackingOrderDomainErrors } from '@domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommand } from './RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommand';
 
 @Injectable()
@@ -14,21 +19,22 @@ export class RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler {
   );
 
   constructor(
+    @Inject(IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
     private readonly repository: IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    @Inject(IDateTimeSymbol)
     private readonly dateTimeProvider: IDateTime,
   ) {}
 
   async handle(
     command: RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommand,
   ): Promise<Result> {
-    const maybeRoleBasedVoiceChannelConnectionTrackingOrder: Maybe<RoleBasedVoiceChannelConnectionTrackingOrder> =
-      await this.repository.exist(
-        command.guildId,
-        command.trackerGuildMemberId,
-        command.trackedGuildRoleId,
-      );
+    const isAlreadyTracked: boolean = await this.repository.exist(
+      command.guildId,
+      command.trackerGuildMemberId,
+      command.trackedGuildRoleId,
+    );
 
-    if (maybeRoleBasedVoiceChannelConnectionTrackingOrder.hasValue()) {
+    if (isAlreadyTracked) {
       return Result.failure(
         VoiceChannelConnectionTrackingOrderDomainErrors.RoleAlreadyTracked,
       );

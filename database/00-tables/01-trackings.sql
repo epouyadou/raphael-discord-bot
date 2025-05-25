@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS raphaeldb.user_based_voice_channel_connection_trackin
     guild_id VARCHAR(64) NOT NULL,
     tracker_guild_member_id VARCHAR(64) NOT NULL,
     tracked_guild_member_id VARCHAR(64) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uc_user_tracking UNIQUE (guild_id, tracker_guild_member_id, tracked_guild_member_id)
 );
 
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS raphaeldb.role_based_voice_channel_connection_trackin
     guild_id VARCHAR(64) NOT NULL,
     tracker_guild_member_id VARCHAR(64) NOT NULL,
     tracked_guild_role_id VARCHAR(64) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uc_role_tracking UNIQUE (guild_id, tracker_guild_member_id, tracked_guild_role_id)
 );
 

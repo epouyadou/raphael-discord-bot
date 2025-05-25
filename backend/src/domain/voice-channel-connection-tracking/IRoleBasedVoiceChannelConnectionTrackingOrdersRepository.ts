@@ -8,15 +8,20 @@ export interface IRoleBasedVoiceChannelConnectionTrackingOrdersRepository {
     trackedGuildRoleId: Snowflake,
   ): Promise<boolean>;
 
-  findAllByTrackedGuildMemberId(
-    trackedGuildMemberId: Snowflake,
+  findAllByTrackedTrackedRoles(
+    guildId: Snowflake,
+    trackedtrackedRoles: Snowflake[],
   ): Promise<RoleBasedVoiceChannelConnectionTrackingOrder[]>;
 
   save(
     roleBasedVoiceChannelConnectionTrackingOrder: RoleBasedVoiceChannelConnectionTrackingOrder,
   ): Promise<void>;
+
+  deleteAllOfTracker(
+    guildId: Snowflake,
+    trackerGuildMemberId: Snowflake,
+  ): Promise<void>;
 }
 
-export const IRoleBasedVoiceChannelConnectionTrackingOrdersRepository = Symbol(
-  'IRoleBasedVoiceChannelConnectionTrackingOrdersRepository',
-);
+export const IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol =
+  Symbol('IRoleBasedVoiceChannelConnectionTrackingOrdersRepository');

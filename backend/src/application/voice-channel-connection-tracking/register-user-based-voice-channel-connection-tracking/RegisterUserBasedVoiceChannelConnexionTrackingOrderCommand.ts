@@ -1,4 +1,4 @@
-import { Snowflake } from 'src/shared/types/snowflake';
+import { Snowflake } from '@shared/types/snowflake';
 
 export type RegisterUserBasedVoiceChannelConnexionTrackingOrderCommand = {
   guildId: Snowflake;

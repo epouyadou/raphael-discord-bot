@@ -1,4 +1,7 @@
-import { IDateTime } from 'src/application/abstractions/common/IDateTime';
+import {
+  IDateTime,
+  IDateTimeSymbol,
+} from '@application/abstractions/common/IDateTime';
 
 export class MachineTime implements IDateTime {
   /**
@@ -9,3 +12,8 @@ export class MachineTime implements IDateTime {
     return new Date(Date.now());
   }
 }
+
+export const IDateTimeProvider = {
+  provide: IDateTimeSymbol,
+  useClass: MachineTime,
+};

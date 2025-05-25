@@ -1,4 +1,4 @@
-import { Snowflake } from '../../shared/types/snowflake';
+import { Snowflake } from '@shared/types/snowflake';
 import { Ensure } from '../core/guards/Ensure';
 
 export class UserBasedVoiceChannelConnectionTrackingOrder {

@@ -1,14 +1,14 @@
-import { IRoleBasedVoiceChannelConnectionTrackingOrdersRepository } from 'src/domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
-import { IUserBasedVoiceChannelConnectionTrackingOrdersRepository } from 'src/domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
+import { IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
+import { IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { RoleBasedVoiceChannelConnectionTrackingOrdersRepository } from './RoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { UserBasedVoiceChannelConnectionTrackingOrdersRepository } from './UserBasedVoiceChannelConnectionTrackingOrdersRepository';
 
 export const RoleBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider = {
-  provide: IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+  provide: IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
   useClass: RoleBasedVoiceChannelConnectionTrackingOrdersRepository,
 };
 
 export const UserBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider = {
-  provide: IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+  provide: IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
   useClass: UserBasedVoiceChannelConnectionTrackingOrdersRepository,
 };

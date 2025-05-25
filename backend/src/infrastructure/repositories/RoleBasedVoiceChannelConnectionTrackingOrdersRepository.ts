@@ -1,8 +1,8 @@
+import { IRoleBasedVoiceChannelConnectionTrackingOrdersRepository } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
+import { RoleBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
 import { Injectable } from '@nestjs/common';
+import { Snowflake } from '@shared/types/snowflake';
 import { PostgresPool } from 'src/core/postgres/postgres';
-import { IRoleBasedVoiceChannelConnectionTrackingOrdersRepository } from 'src/domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
-import { RoleBasedVoiceChannelConnectionTrackingOrder } from 'src/domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
-import { Snowflake } from 'src/shared/types/snowflake';
 import { mapAllToRoleBasedVoiceChannelConnectionTrackingOrder } from '../mappers/RoleBasedVoiceChannelConnectionTrackingOrderMapper';
 
 @Injectable()
@@ -33,18 +33,23 @@ export class RoleBasedVoiceChannelConnectionTrackingOrdersRepository
     return result.rowCount !== null && result.rowCount > 0;
   }
 
-  async findAllByTrackedGuildMemberId(
-    trackedGuildMemberId: Snowflake,
+  async findAllByTrackedTrackedRoles(
+    guildId: Snowflake,
+    trackedtrackedRoles: Snowflake[],
   ): Promise<RoleBasedVoiceChannelConnectionTrackingOrder[]> {
     const query = `
       SELECT *
       FROM raphaeldb.role_based_voice_channel_connection_tracking_orders
-      WHERE tracked_guild_member_id = $1
+      WHERE guild_id = $1
+        AND tracked_guild_role_id = ANY($2)
     `;
 
-    const result = await this.postgres.query(query, [trackedGuildMemberId]);
+    const result = await this.postgres.query(query, [
+      guildId,
+      trackedtrackedRoles,
+    ]);
 
-    return mapAllToRoleBasedVoiceChannelConnectionTrackingOrder(result.rows);
+    return mapAllToRoleBasedVoiceChannelConnectionTrackingOrder(result);
   }
 
   async save(
@@ -66,5 +71,18 @@ export class RoleBasedVoiceChannelConnectionTrackingOrdersRepository
       roleBasedVoiceChannelConnectionTrackingOrder.trackedGuildRoleId,
       roleBasedVoiceChannelConnectionTrackingOrder.createdAt.toISOString(),
     ]);
+  }
+
+  async deleteAllOfTracker(
+    guildId: Snowflake,
+    trackerGuildMemberId: Snowflake,
+  ): Promise<void> {
+    const query = `
+      DELETE FROM raphaeldb.role_based_voice_channel_connection_tracking_orders
+      WHERE guild_id = $1
+        AND tracker_guild_member_id = $2
+    `;
+
+    await this.postgres.query(query, [guildId, trackerGuildMemberId]);
   }
 }

@@ -1,11 +1,16 @@
-import { Injectable, Logger } from '@nestjs/common';
-import { IDateTime } from 'src/application/abstractions/common/IDateTime';
-import { Maybe } from 'src/domain/core/primitives/Maybe';
-import { Result } from 'src/domain/core/primitives/Result';
-import { IUserBasedVoiceChannelConnectionTrackingOrdersRepository } from 'src/domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
-import { VoiceChannelConnectionTrackingOrderDomainErrors } from 'src/domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
+import {
+  IDateTime,
+  IDateTimeSymbol,
+} from '@application/abstractions/common/IDateTime';
+import { Result } from '@domain/core/primitives/Result';
+import {
+  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+} from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
+import { VoiceChannelConnectionTrackingOrderDomainErrors } from '@domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 
-import { UserBasedVoiceChannelConnectionTrackingOrder } from 'src/domain/voice-channel-connection-tracking/UserBasedVoiceChannelConnectionTrackingOrder';
+import { UserBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/UserBasedVoiceChannelConnectionTrackingOrder';
 import { RegisterUserBasedVoiceChannelConnexionTrackingOrderCommand } from './RegisterUserBasedVoiceChannelConnexionTrackingOrderCommand';
 
 @Injectable()
@@ -15,21 +20,22 @@ export class RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler {
   );
 
   constructor(
+    @Inject(IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
     private readonly repository: IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+    @Inject(IDateTimeSymbol)
     private readonly dateTimeProvider: IDateTime,
   ) {}
 
   async handle(
     command: RegisterUserBasedVoiceChannelConnexionTrackingOrderCommand,
   ): Promise<Result> {
-    const maybeUserBasedVoiceChannelConnectionTrackingOrder: Maybe<UserBasedVoiceChannelConnectionTrackingOrder> =
-      await this.repository.findOneMatching(
-        command.guildId,
-        command.trackerGuildMemberId,
-        command.trackedGuildMemberId,
-      );
+    const isAlreadyTracked: boolean = await this.repository.exists(
+      command.guildId,
+      command.trackerGuildMemberId,
+      command.trackedGuildMemberId,
+    );
 
-    if (maybeUserBasedVoiceChannelConnectionTrackingOrder.hasValue()) {
+    if (isAlreadyTracked) {
       this.logger.warn(
         `UserBasedVoiceChannelConnectionTrackingOrder already exists for guild ${command.guildId}, tracker member ${command.trackerGuildMemberId}, tracked user ${command.trackedGuildMemberId}. Skipping registration.`,
       );

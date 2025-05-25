@@ -1,4 +1,4 @@
-import { Snowflake } from 'src/shared/types/snowflake';
+import { Snowflake } from '@shared/types/snowflake';
 import { UserBasedVoiceChannelConnectionTrackingOrder } from './UserBasedVoiceChannelConnectionTrackingOrder';
 
 export interface IUserBasedVoiceChannelConnectionTrackingOrdersRepository {
@@ -8,15 +8,20 @@ export interface IUserBasedVoiceChannelConnectionTrackingOrdersRepository {
     trackedGuildMemberId: Snowflake,
   ): Promise<boolean>;
 
-  findAllByTrackedGuildMemberId(
+  findAllByTrackerTrackingOrders(
+    guildId: Snowflake,
     trackedGuildMemberId: Snowflake,
   ): Promise<UserBasedVoiceChannelConnectionTrackingOrder[]>;
 
   save(
     userVoiceChannelConnectionTrackingOrders: UserBasedVoiceChannelConnectionTrackingOrder,
   ): Promise<void>;
+
+  deleteAllOfTracker(
+    guildId: Snowflake,
+    trackerGuildMemberId: Snowflake,
+  ): Promise<void>;
 }
 
-export const IUserBasedVoiceChannelConnectionTrackingOrdersRepository = Symbol(
-  'IUserBasedVoiceChannelConnectionTrackingOrdersRepository',
-);
+export const IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol =
+  Symbol('IUserBasedVoiceChannelConnectionTrackingOrdersRepository');

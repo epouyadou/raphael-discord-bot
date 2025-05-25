@@ -1,6 +1,5 @@
 import { InvalidOperationException } from '../exceptions/InvalidOperationException';
 import { BotError } from './BotError';
-import { TypedResult } from './TypedResult';
 
 export class Result {
   constructor(
@@ -29,27 +28,8 @@ export class Result {
     return new Result(true, BotError.None);
   }
 
-  static typeSuccess<TValue>(value: TValue): TypedResult<TValue> {
-    return new TypedResult<TValue>(value, true, BotError.None);
-  }
-
-  static create<TValue>(
-    value?: TValue,
-    error: BotError = BotError.None,
-  ): Result {
-    if (value === undefined || value === null) {
-      return this.typedFailure(error);
-    } else {
-      return this.typeSuccess(value);
-    }
-  }
-
   static failure(error: BotError): Result {
     return new Result(false, error);
-  }
-
-  static typedFailure<TValue>(error: BotError): TypedResult<TValue> {
-    return new TypedResult<TValue>(undefined, false, error);
   }
 
   static firstFailureOrSuccess(...results: Result[]): Result {
