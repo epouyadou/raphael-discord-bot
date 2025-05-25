@@ -4,20 +4,20 @@ import { Ensure } from '../core/guards/Ensure';
 export class RoleBasedVoiceChannelConnectionTrackingOrder {
   id: number | undefined;
   guildId: Snowflake;
-  trackerId: Snowflake;
+  trackerGuildMemberId: Snowflake;
   trackedGuildRoleId: Snowflake;
   createdAt: Date;
 
   private constructor(
     id: number | undefined,
     guildId: Snowflake,
-    trackerId: Snowflake,
+    trackerGuildMemberId: Snowflake,
     trackedGuildRoleId: Snowflake,
     createdAt: Date,
   ) {
     this.id = id;
     this.guildId = guildId;
-    this.trackerId = trackerId;
+    this.trackerGuildMemberId = trackerGuildMemberId;
     this.trackedGuildRoleId = trackedGuildRoleId;
     this.createdAt = createdAt;
   }
@@ -25,12 +25,16 @@ export class RoleBasedVoiceChannelConnectionTrackingOrder {
   static create(
     id: number | undefined,
     guildId: Snowflake,
-    trackerId: Snowflake,
+    trackerGuildMemberId: Snowflake,
     trackedGuildRoleId: Snowflake,
     createdAt: Date,
   ): RoleBasedVoiceChannelConnectionTrackingOrder {
     Ensure.notEmpty(guildId, 'Guild ID cannot be empty', 'guildId');
-    Ensure.notEmpty(trackerId, 'Tracker ID cannot be empty', 'trackerId');
+    Ensure.notEmpty(
+      trackerGuildMemberId,
+      'Tracker Guild Member ID cannot be empty',
+      'trackerGuildMemberId',
+    );
     Ensure.notEmpty(
       trackedGuildRoleId,
       'Tracked Guild Role ID cannot be empty',
@@ -45,7 +49,7 @@ export class RoleBasedVoiceChannelConnectionTrackingOrder {
     return new RoleBasedVoiceChannelConnectionTrackingOrder(
       id,
       guildId,
-      trackerId,
+      trackerGuildMemberId,
       trackedGuildRoleId,
       createdAt,
     );

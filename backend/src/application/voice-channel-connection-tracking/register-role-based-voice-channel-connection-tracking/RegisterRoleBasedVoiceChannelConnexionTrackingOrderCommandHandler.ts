@@ -22,7 +22,7 @@ export class RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler {
     command: RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommand,
   ): Promise<Result> {
     const maybeRoleBasedVoiceChannelConnectionTrackingOrder: Maybe<RoleBasedVoiceChannelConnectionTrackingOrder> =
-      await this.repository.findOneMatching(
+      await this.repository.exist(
         command.guildId,
         command.trackerGuildMemberId,
         command.trackedGuildRoleId,

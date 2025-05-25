@@ -1,5 +1,5 @@
 
-CREATE TABLE IF NOT EXISTS raphaeldb.user_tracking_orders (
+CREATE TABLE IF NOT EXISTS raphaeldb.user_based_voice_channel_connection_tracking_orders (
     id SERIAL PRIMARY KEY,
     guild_id VARCHAR(64) NOT NULL,
     tracker_guild_member_id VARCHAR(64) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS raphaeldb.user_tracking_orders (
     CONSTRAINT uc_user_tracking UNIQUE (guild_id, tracker_guild_member_id, tracked_guild_member_id)
 );
 
-CREATE TABLE IF NOT EXISTS raphaeldb.role_tracking_orders (
+CREATE TABLE IF NOT EXISTS raphaeldb.role_based_voice_channel_connection_tracking_orders (
     id SERIAL PRIMARY KEY,
     guild_id VARCHAR(64) NOT NULL,
     tracker_guild_member_id VARCHAR(64) NOT NULL,

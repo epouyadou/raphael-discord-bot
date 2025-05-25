@@ -4,7 +4,7 @@ import { Ensure } from '../core/guards/Ensure';
 export class UserBasedVoiceChannelConnectionTrackingOrder {
   id: number | undefined;
   guildId: Snowflake;
-  trackerId: Snowflake;
+  trackerGuildMemberId: Snowflake;
   trackedGuildMemberId: Snowflake;
   createdAt: Date;
 
@@ -17,7 +17,7 @@ export class UserBasedVoiceChannelConnectionTrackingOrder {
   ) {
     this.id = id;
     this.guildId = guildId;
-    this.trackerId = trackerId;
+    this.trackerGuildMemberId = trackerId;
     this.trackedGuildMemberId = trackedGuildMemberId;
     this.createdAt = createdAt;
   }
@@ -25,12 +25,16 @@ export class UserBasedVoiceChannelConnectionTrackingOrder {
   static create(
     id: number | undefined,
     guildId: Snowflake,
-    trackerId: Snowflake,
+    trackerGuildMemberId: Snowflake,
     trackedGuildMemberId: Snowflake,
     createdAt: Date,
   ): UserBasedVoiceChannelConnectionTrackingOrder {
     Ensure.notEmpty(guildId, 'Guild ID cannot be empty', 'guildId');
-    Ensure.notEmpty(trackerId, 'Tracker ID cannot be empty', 'trackerId');
+    Ensure.notEmpty(
+      trackerGuildMemberId,
+      'Tracker Guild Member ID cannot be empty',
+      'trackerGuildMemberId',
+    );
     Ensure.notEmpty(
       trackedGuildMemberId,
       'Tracked Guild Member ID cannot be empty',
@@ -45,7 +49,7 @@ export class UserBasedVoiceChannelConnectionTrackingOrder {
     return new UserBasedVoiceChannelConnectionTrackingOrder(
       id,
       guildId,
-      trackerId,
+      trackerGuildMemberId,
       trackedGuildMemberId,
       createdAt,
     );

@@ -1,13 +1,12 @@
 import { Snowflake } from 'src/shared/types/snowflake';
-import { Maybe } from '../core/primitives/Maybe';
-import { UserBasedVoiceChannelConnectionTrackingOrder } from './UserBasedVoiceChannelConnectionTrackingOrders';
+import { UserBasedVoiceChannelConnectionTrackingOrder } from './UserBasedVoiceChannelConnectionTrackingOrder';
 
 export interface IUserBasedVoiceChannelConnectionTrackingOrdersRepository {
-  findOneMatching(
+  exists(
     guildId: Snowflake,
     trackerGuildMemberId: Snowflake,
     trackedGuildMemberId: Snowflake,
-  ): Promise<Maybe<UserBasedVoiceChannelConnectionTrackingOrder>>;
+  ): Promise<boolean>;
 
   findAllByTrackedGuildMemberId(
     trackedGuildMemberId: Snowflake,
@@ -17,3 +16,7 @@ export interface IUserBasedVoiceChannelConnectionTrackingOrdersRepository {
     userVoiceChannelConnectionTrackingOrders: UserBasedVoiceChannelConnectionTrackingOrder,
   ): Promise<void>;
 }
+
+export const IUserBasedVoiceChannelConnectionTrackingOrdersRepository = Symbol(
+  'IUserBasedVoiceChannelConnectionTrackingOrdersRepository',
+);

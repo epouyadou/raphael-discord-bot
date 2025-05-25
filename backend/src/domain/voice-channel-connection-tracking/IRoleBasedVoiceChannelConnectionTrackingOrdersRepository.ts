@@ -1,13 +1,12 @@
 import { Snowflake } from 'discord.js';
-import { Maybe } from 'src/domain/core/primitives/Maybe';
 import { RoleBasedVoiceChannelConnectionTrackingOrder } from './RoleBasedVoiceChannelConnectionTrackingOrder';
 
 export interface IRoleBasedVoiceChannelConnectionTrackingOrdersRepository {
-  findOneMatching(
+  exist(
     guildId: Snowflake,
     trackerGuildMemberId: Snowflake,
     trackedGuildRoleId: Snowflake,
-  ): Promise<Maybe<RoleBasedVoiceChannelConnectionTrackingOrder>>;
+  ): Promise<boolean>;
 
   findAllByTrackedGuildMemberId(
     trackedGuildMemberId: Snowflake,
@@ -17,3 +16,7 @@ export interface IRoleBasedVoiceChannelConnectionTrackingOrdersRepository {
     roleBasedVoiceChannelConnectionTrackingOrder: RoleBasedVoiceChannelConnectionTrackingOrder,
   ): Promise<void>;
 }
+
+export const IRoleBasedVoiceChannelConnectionTrackingOrdersRepository = Symbol(
+  'IRoleBasedVoiceChannelConnectionTrackingOrdersRepository',
+);

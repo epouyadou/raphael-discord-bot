@@ -5,7 +5,7 @@ import { Result } from 'src/domain/core/primitives/Result';
 import { IUserBasedVoiceChannelConnectionTrackingOrdersRepository } from 'src/domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { VoiceChannelConnectionTrackingOrderDomainErrors } from 'src/domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
 
-import { UserBasedVoiceChannelConnectionTrackingOrder } from 'src/domain/voice-channel-connection-tracking/UserBasedVoiceChannelConnectionTrackingOrders';
+import { UserBasedVoiceChannelConnectionTrackingOrder } from 'src/domain/voice-channel-connection-tracking/UserBasedVoiceChannelConnectionTrackingOrder';
 import { RegisterUserBasedVoiceChannelConnexionTrackingOrderCommand } from './RegisterUserBasedVoiceChannelConnexionTrackingOrderCommand';
 
 @Injectable()
