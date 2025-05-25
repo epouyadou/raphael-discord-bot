@@ -39,5 +39,14 @@ services:
       - pg_data:/var/lib/postgresql/data
     restart: always
 
+  adminer:
+    container_name: raphael-adminer
+    image: adminer:4.8.1
+    ports:
+      - "8081:8080"
+    depends_on:
+      - postgres
+    restart: always
+
 volumes:
   pg_data:

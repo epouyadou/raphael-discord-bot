@@ -1,9 +1,11 @@
+import { ApplicationModule } from '@application/application.module';
+import { InfrastructureModule } from '@infrastructure/infrastructure.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { DiscordModule } from '@presentation/discord/discord.module';
 import { IntentsBitField } from 'discord.js';
 import { NecordModule } from 'necord';
 import { AppService } from './app.service';
-import { AppCommandsModule } from './commands/app-commands.module';
 import { PostgresModule } from './core/postgres/postgres.module';
 import { getEnv } from './core/utils/env';
 
@@ -21,7 +23,9 @@ import { getEnv } from './core/utils/env';
       ],
       development: getEnv('DISCORD_DEVELOPMENT_GUILD_IDs'),
     }),
-    AppCommandsModule,
+    InfrastructureModule,
+    ApplicationModule,
+    DiscordModule,
   ],
   providers: [AppService],
 })
