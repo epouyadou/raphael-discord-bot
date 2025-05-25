@@ -10,8 +10,8 @@ export interface IRoleBasedVoiceChannelConnectionTrackingOrdersRepository {
   ): Promise<Maybe<RoleBasedVoiceChannelConnectionTrackingOrder>>;
 
   findAllByTrackedGuildMemberId(
-    trackedGuildMemberId: string,
-  ): Promise<Maybe<RoleBasedVoiceChannelConnectionTrackingOrder[]>>;
+    trackedGuildMemberId: Snowflake,
+  ): Promise<RoleBasedVoiceChannelConnectionTrackingOrder[]>;
 
   save(
     roleBasedVoiceChannelConnectionTrackingOrder: RoleBasedVoiceChannelConnectionTrackingOrder,

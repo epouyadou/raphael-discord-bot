@@ -36,6 +36,7 @@ export class RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler {
 
     const newRoleBasedVoiceChannelConnectionTrackingOrder: RoleBasedVoiceChannelConnectionTrackingOrder =
       RoleBasedVoiceChannelConnectionTrackingOrder.create(
+        undefined, // ID will be assigned by the database
         command.guildId,
         command.trackerGuildMemberId,
         command.trackedGuildRoleId,

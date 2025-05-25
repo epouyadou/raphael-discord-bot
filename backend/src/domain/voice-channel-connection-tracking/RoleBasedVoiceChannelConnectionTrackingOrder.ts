@@ -23,9 +23,10 @@ export class RoleBasedVoiceChannelConnectionTrackingOrder {
   }
 
   static create(
-    guildId: string,
-    trackerId: string,
-    trackedGuildRoleId: string,
+    id: number | undefined,
+    guildId: Snowflake,
+    trackerId: Snowflake,
+    trackedGuildRoleId: Snowflake,
     createdAt: Date,
   ): RoleBasedVoiceChannelConnectionTrackingOrder {
     Ensure.notEmpty(guildId, 'Guild ID cannot be empty', 'guildId');
@@ -42,7 +43,7 @@ export class RoleBasedVoiceChannelConnectionTrackingOrder {
     );
 
     return new RoleBasedVoiceChannelConnectionTrackingOrder(
-      undefined,
+      id,
       guildId,
       trackerId,
       trackedGuildRoleId,
