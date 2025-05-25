@@ -2,12 +2,12 @@ import { Snowflake } from '@shared/types/snowflake';
 import { Ensure } from '../core/guards/Ensure';
 
 export class VoiceChannelStatusRecord {
-  private id: string | undefined;
-  private guildId: Snowflake;
-  private guildMemberId: Snowflake;
-  private fromVoiceChannelId: Snowflake | null;
-  private toVoiceChannelId: Snowflake | null;
-  private createdAt: Date;
+  id: string | undefined;
+  guildId: Snowflake;
+  guildMemberId: Snowflake;
+  fromVoiceChannelId: Snowflake | null;
+  toVoiceChannelId: Snowflake | null;
+  createdAt: Date;
 
   private constructor(
     id: string | undefined,

@@ -19,8 +19,8 @@ CREATE TABLE IF NOT EXISTS raphaeldb.role_based_voice_channel_connection_trackin
 
 CREATE TABLE IF NOT EXISTS raphaeldb.voice_channel_status_records (
     id SERIAL PRIMARY KEY,
-    guild_member_id VARCHAR(64) NOT NULL,
     guild_id VARCHAR(64) NOT NULL,
+    guild_member_id VARCHAR(64) NOT NULL,
     from_guild_channel_id VARCHAR(64),
     to_guild_channel_id VARCHAR(64),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

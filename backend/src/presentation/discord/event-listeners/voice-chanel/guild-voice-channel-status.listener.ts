@@ -1,3 +1,4 @@
+import { SaveUserVoiceChannelStatusCommandHandler } from '@application/user-voice-connection-status/save-user-voice-channel-status/SaveUserVoiceChannelStatusCommandHandler';
 import { NotifyConnectionOfTrackedUserCommand } from '@application/voice-channel-connection-tracking/notify-connection-of-tracked-user/NotifyConnectionOfTrackedUserCommand';
 import { NotifyConnectionOfTrackedUserCommandHandler } from '@application/voice-channel-connection-tracking/notify-connection-of-tracked-user/NotifyConnectionOfTrackedUserCommandHandler';
 import { NotifyConnectionOfUserWithTrackedRoleCommand } from '@application/voice-channel-connection-tracking/notify-connection-of-user-with-tracked-role/NotifyConnectionOfUserWithTrackedRoleCommand';
@@ -6,6 +7,7 @@ import { Inject, Logger } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
 import { Client } from 'discord.js';
 import { Context, ContextOf, On } from 'necord';
+import { SaveUserVoiceChannelStatusCommand } from './../../../../application/user-voice-connection-status/save-user-voice-channel-status/SaveUserVoiceChannelStatusCommand';
 
 export class GuildVoiceChannelStatusListener {
   private readonly logger = new Logger(GuildVoiceChannelStatusListener.name);
@@ -15,6 +17,7 @@ export class GuildVoiceChannelStatusListener {
     private client: Client,
     private readonly notifyConnectionOfTrackedUserCommandHandler: NotifyConnectionOfTrackedUserCommandHandler,
     private readonly notifyConnectionOfUserWithTrackedRoleCommandHandler: NotifyConnectionOfUserWithTrackedRoleCommandHandler,
+    private readonly saveUserVoiceChannelStatusCommandHandler: SaveUserVoiceChannelStatusCommandHandler,
   ) {}
 
   @On('voiceChannelJoin')
@@ -30,13 +33,12 @@ export class GuildVoiceChannelStatusListener {
       `User ${member.id} joined voice channel ${voiceChannel.id}`,
     );
 
-    // TODO: Register the event in the database
-    // await this.notifyMeOnVoiceChannelConnectionService.registerVoiceChannelStatus(
-    //   member.id,
-    //   voiceChannel.guildId,
-    //   null,
-    //   voiceChannel.id,
-    // );
+    await this.saveUserVoiceChannelStatus({
+      guildId: voiceChannel.guildId,
+      guildMemberId: member.id,
+      fromChannelId: null, // No previous channel, user just joined
+      toChannelId: voiceChannel.id,
+    });
 
     const guild = await this.client.guilds
       .fetch(voiceChannel.guildId)
@@ -99,13 +101,12 @@ export class GuildVoiceChannelStatusListener {
       `User ${member.id} leaved voice channel ${voiceChannel.id}`,
     );
 
-    // TODO: Register the event in the database
-    // await this.notifyMeOnVoiceChannelConnectionService.registerVoiceChannelStatus(
-    //   member.id,
-    //   voiceChannel.guildId,
-    //   voiceChannel.id,
-    //   null,
-    // );
+    await this.saveUserVoiceChannelStatus({
+      guildId: voiceChannel.guildId,
+      guildMemberId: member.id,
+      fromChannelId: voiceChannel.id,
+      toChannelId: null,
+    });
   }
 
   @On('voiceChannelSwitch')
@@ -117,12 +118,17 @@ export class GuildVoiceChannelStatusListener {
       `User ${member.id} switched from voice channel ${fromChannel.id} to ${toChannel.id}`,
     );
 
-    // TODO: Register the event in the database
-    // await this.notifyMeOnVoiceChannelConnectionService.registerVoiceChannelStatus(
-    //   member.id,
-    //   fromChannel.guildId,
-    //   fromChannel.id,
-    //   toChannel.id,
-    // );
+    await this.saveUserVoiceChannelStatus({
+      guildId: fromChannel.guildId,
+      guildMemberId: member.id,
+      fromChannelId: fromChannel.id,
+      toChannelId: toChannel.id,
+    });
+  }
+
+  private async saveUserVoiceChannelStatus(
+    command: SaveUserVoiceChannelStatusCommand,
+  ) {
+    await this.saveUserVoiceChannelStatusCommandHandler.handle(command);
   }
 }
