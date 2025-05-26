@@ -49,3 +49,10 @@ This will rebuild and run the containers.
 - `docker` Docker images for development and production
 - `database` PostgreSQL database files to bootstrap the database on first run
 - `.github` Github Actions CI/CD
+
+## Roadmap
+- Display user tracking connection orders
+  - Display current user tracking connection orders
+  - Display mentionable user tracking connection orders
+    - If it's a Role : Display all the users tracking this role
+    - If it's a User : Display all the user's tracking connection orders
