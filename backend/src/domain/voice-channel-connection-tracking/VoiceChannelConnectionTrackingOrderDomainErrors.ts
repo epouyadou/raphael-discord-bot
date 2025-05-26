@@ -15,4 +15,13 @@ export class VoiceChannelConnectionTrackingOrderDomainErrors {
     'VoiceChannelConnectionTrackingOrderDomainErrors.FailedToRegister',
     'Failed to register the voice channel connection tracking order. Please try again later. If the problem persists, contact support.',
   );
+
+  static readonly FailedToDeregister = new BotError(
+    'VoiceChannelConnectionTrackingOrderDomainErrors.FailedToDeregister',
+    'Failed to deregister the voice channel connection tracking order. Please try again later. If the problem persists, contact support.',
+  );
+  static readonly NotFound = new BotError(
+    'VoiceChannelConnectionTrackingOrderDomainErrors.NotFound',
+    'The voice channel connection tracking order was not found. It may have already been deleted or never existed.',
+  );
 }

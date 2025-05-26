@@ -6,6 +6,10 @@ import {
 import { Inject, Logger } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
 import { Client } from 'discord.js';
+import {
+  formatGuildChannelLink,
+  formatGuildUser,
+} from 'src/core/utils/discord_formatter';
 import { NotifyConnectionOfTrackedUserCommand } from './NotifyConnectionOfTrackedUserCommand';
 
 export class NotifyConnectionOfTrackedUserCommandHandler {
@@ -72,7 +76,7 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
 
       try {
         await user.send(
-          `User <@${command.guildMemberId}> has connected to a voice channel in guild https://discord.com/channels/${command.guildId}/${command.voiceChannelId}.`,
+          `User ${formatGuildUser(command.guildMemberId)} has connected to a voice channel in guild ${formatGuildChannelLink(command.guildId, command.voiceChannelId)}.`,
         );
         notifiedUsers.add(order.trackerGuildMemberId);
       } catch (error: unknown) {

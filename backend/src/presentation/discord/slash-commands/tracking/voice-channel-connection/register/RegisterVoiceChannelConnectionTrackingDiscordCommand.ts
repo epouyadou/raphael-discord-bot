@@ -18,20 +18,25 @@ import {
   SlashCommandContext,
   Subcommand,
 } from 'necord';
-import { NotifyMeCommandsDecorator } from '../notify-me.command';
+import {
+  formatGuildRole,
+  formatGuildUser,
+} from 'src/core/utils/discord_formatter';
+import { TrackingGroupCommandDecorator } from '../../TrackingGroupCommandDecorator';
 
 export class NotifyMeOnVoiceChannelConnectionDto {
   @MentionableOption({
     name: 'mention',
-    description: 'The guild member, or role to track in the voice channel',
+    description: 'The guild member, or role to track',
     required: true,
   })
   mentionable: GuildMember | Role | User;
 }
-@NotifyMeCommandsDecorator()
-export class NotifyMeOnVoiceChannelConnectionCommand {
+
+@TrackingGroupCommandDecorator()
+export class RegisterVoiceChannelConnectionTrackingDiscordCommand {
   private readonly logger = new Logger(
-    NotifyMeOnVoiceChannelConnectionCommand.name,
+    RegisterVoiceChannelConnectionTrackingDiscordCommand.name,
   );
 
   constructor(
@@ -40,7 +45,7 @@ export class NotifyMeOnVoiceChannelConnectionCommand {
   ) {}
 
   @Subcommand({
-    name: 'of',
+    name: 'voice-channel-connection-of',
     description: 'Notify me when somebody is connecting in a voice channel',
   })
   public async onNotifyMe(
@@ -108,7 +113,7 @@ export class NotifyMeOnVoiceChannelConnectionCommand {
     }
 
     await interaction.reply({
-      content: `You will be notified when ${mentionable.displayName} connects to a vocal channel.`,
+      content: `You will be notified when ${formatGuildUser(mentionable.id)} connects to a vocal channel.`,
       flags: MessageFlags.Ephemeral,
     });
   }
@@ -142,7 +147,7 @@ export class NotifyMeOnVoiceChannelConnectionCommand {
     }
 
     await interaction.reply({
-      content: `You will be notified when someone with the ${mentionable.name} role connects to a vocal channel.`,
+      content: `You will be notified when someone with the ${formatGuildRole(mentionable.id)} role connects to a vocal channel.`,
       flags: MessageFlags.Ephemeral,
     });
   }

@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { NotifyCommandsModule } from './notify/notify-commands.module';
+import { MiscellaneousCommandsModule } from './miscellaneous/miscellaneous-commands.module';
+import { TrackingCommandsModule } from './tracking/tracking-commands.module';
 
 @Module({
-  imports: [NotifyCommandsModule],
+  imports: [TrackingCommandsModule, MiscellaneousCommandsModule],
   providers: [],
 })
 export class DiscordSlashCommandsModule {}
