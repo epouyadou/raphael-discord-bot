@@ -73,6 +73,29 @@ export class RoleBasedVoiceChannelConnectionTrackingOrdersRepository
     ]);
   }
 
+  async delete(
+    guildId: Snowflake,
+    trackerGuildMemberId: Snowflake,
+    trackedGuildRoleId: Snowflake,
+  ): Promise<boolean> {
+    const query = `
+      DELETE FROM raphaeldb.role_based_voice_channel_connection_tracking_orders
+      WHERE guild_id = $1
+        AND tracker_guild_member_id = $2
+        AND tracked_guild_role_id = $3
+    `;
+
+    const result = await this.postgres.query(query, [
+      guildId,
+      trackerGuildMemberId,
+      trackedGuildRoleId,
+    ]);
+
+    console.log(JSON.stringify(result, null, 2));
+
+    return result.rowCount !== null && result.rowCount > 0;
+  }
+
   async deleteAllOfTracker(
     guildId: Snowflake,
     trackerGuildMemberId: Snowflake,
