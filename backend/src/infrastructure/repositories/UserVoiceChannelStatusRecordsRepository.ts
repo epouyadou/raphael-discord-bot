@@ -1,4 +1,7 @@
-import { IUserVoiceChannelStatusRecordsRepository } from '@domain/voice-channel-status-records/IUserVoiceChannelStatusRecordsRepository';
+import {
+  IUserVoiceChannelStatusRecordsRepository,
+  IUserVoiceChannelStatusRecordsRepositorySymbol,
+} from '@domain/voice-channel-status-records/IUserVoiceChannelStatusRecordsRepository';
 import { VoiceChannelStatusRecord } from '@domain/voice-channel-status-records/VoiceChannelStatusRecord';
 import { Injectable } from '@nestjs/common';
 import { PostgresPool } from 'src/core/postgres/postgres';
@@ -31,3 +34,8 @@ export class UserVoiceChannelStatusRecordsRepository
     ]);
   }
 }
+
+export const UserVoiceChannelStatusRecordsRepositoryProvider = {
+  provide: IUserVoiceChannelStatusRecordsRepositorySymbol,
+  useClass: UserVoiceChannelStatusRecordsRepository,
+};

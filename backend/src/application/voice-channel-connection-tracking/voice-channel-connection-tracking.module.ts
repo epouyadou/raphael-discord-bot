@@ -1,4 +1,6 @@
-import { InfrastructureModule } from '@infrastructure/infrastructure.module';
+import { CommonImplModule } from '@infrastructure/common/common-impl.module';
+import { CommunicationPlatformImplModule } from '@infrastructure/communication-platform/communication-platform-impl.module';
+import { RepositoryImplModule } from '@infrastructure/repositories/repository-impl.module';
 import { Module } from '@nestjs/common';
 import { DeregisterVoiceChannelConnectionTrackingCommandHandler } from './deregister-voice-channel-connection-tracking/DeregisterVoiceChannelConnectionTrackingCommandHandler';
 import { NotifyConnectionOfTrackedUserCommandHandler } from './notify-connection-of-tracked-user/NotifyConnectionOfTrackedUserCommandHandler';
@@ -7,7 +9,11 @@ import { RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler } fro
 import { RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler } from './register-user-based-voice-channel-connection-tracking/RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler';
 
 @Module({
-  imports: [InfrastructureModule],
+  imports: [
+    RepositoryImplModule,
+    CommonImplModule,
+    CommunicationPlatformImplModule,
+  ],
   providers: [
     DeregisterVoiceChannelConnectionTrackingCommandHandler,
     NotifyConnectionOfTrackedUserCommandHandler,

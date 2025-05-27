@@ -1,3 +1,7 @@
+import {
+  ICommunicationPlatform,
+  ICommunicationPlatformSymbol,
+} from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import { TypedResult } from '@domain/core/primitives/TypedResult';
 import {
   IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
@@ -5,7 +9,6 @@ import {
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { Inject, Logger } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
-import { Client } from 'discord.js';
 import {
   formatGuildChannelLink,
   formatGuildUser,
@@ -18,7 +21,8 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
   );
 
   constructor(
-    @Inject() private readonly client: Client,
+    @Inject(ICommunicationPlatformSymbol)
+    private readonly communicationPlatform: ICommunicationPlatform,
     @Inject(IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
     private readonly repository: IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
   ) {}
@@ -53,15 +57,27 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
         );
         continue;
       }
-      if (command.isInTheVoiceChannel(order.trackerGuildMemberId)) {
+
+      const isInVoiceChannel =
+        await this.communicationPlatform.isInVoiceChannel(
+          command.guildId,
+          command.voiceChannelId,
+          order.trackerGuildMemberId,
+        );
+
+      if (isInVoiceChannel) {
         this.logger.log(
           `Skipping notification for user ${order.trackerGuildMemberId} as they are already in the voice channel.`,
         );
         continue;
       }
 
-      const user = await this.client.users.fetch(order.trackerGuildMemberId);
-      if (!user) {
+      const userExists = await this.communicationPlatform.isUserExistInGuild(
+        command.guildId,
+        order.trackerGuildMemberId,
+      );
+
+      if (!userExists) {
         this.logger.warn(
           `User with ID ${order.trackerGuildMemberId} not found in guild ${command.guildId}. Skipping notification.`,
         );
@@ -75,19 +91,20 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
       }
 
       try {
-        await user.send(
+        await this.communicationPlatform.sendMessageToUser(
+          order.trackerGuildMemberId,
           `User ${formatGuildUser(command.guildMemberId)} has connected to a voice channel in guild ${formatGuildChannelLink(command.guildId, command.voiceChannelId)}.`,
         );
         notifiedUsers.add(order.trackerGuildMemberId);
       } catch (error: unknown) {
         if (error instanceof Error) {
           this.logger.error(
-            `Failed to send notification to user ${user.id}: ${error.message}`,
+            `Failed to send notification to user ${order.trackerGuildMemberId}: ${error.message}`,
             error.stack,
           );
         } else {
           this.logger.error(
-            `Failed to send notification to user ${user.id}: Unknown error`,
+            `Failed to send notification to user ${order.trackerGuildMemberId}: Unknown error`,
             error,
           );
         }

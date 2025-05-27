@@ -8,6 +8,12 @@ export const environmentSchema = z.object({
     .transform((val) => {
       return val.split(',').map((id) => id.trim());
     }),
+  DISCORD_BOT_DEVELOPERS_IDs: z
+    .string()
+    .min(1)
+    .transform((val) => {
+      return val.split(',').map((id) => id.trim());
+    }),
   POSTGRES_DB_USER: z.string().min(1),
   POSTGRES_DB_NAME: z.string().min(1),
   POSTGRES_PASSWORD: z.string().min(1),

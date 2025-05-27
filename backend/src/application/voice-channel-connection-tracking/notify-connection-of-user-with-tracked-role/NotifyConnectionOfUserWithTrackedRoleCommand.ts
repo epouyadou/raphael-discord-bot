@@ -5,6 +5,5 @@ export type NotifyConnectionOfUserWithTrackedRoleCommand = {
   guildMemberId: Snowflake;
   guildMemberRoleIds: Snowflake[];
   voiceChannelId: Snowflake;
-  isInTheVoiceChannel: (userId: Snowflake) => boolean;
   alreadyNotifiedGuildMemberIds: Snowflake[];
 };
