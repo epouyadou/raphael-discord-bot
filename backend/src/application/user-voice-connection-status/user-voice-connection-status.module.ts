@@ -1,9 +1,9 @@
-import { InfrastructureModule } from '@infrastructure/infrastructure.module';
 import { Module } from '@nestjs/common';
+import { RepositoryImplModule } from './../../infrastructure/repositories/repository-impl.module';
 import { SaveUserVoiceChannelStatusCommandHandler } from './save-user-voice-channel-status/SaveUserVoiceChannelStatusCommandHandler';
 
 @Module({
-  imports: [InfrastructureModule],
+  imports: [RepositoryImplModule],
   providers: [SaveUserVoiceChannelStatusCommandHandler],
   exports: [SaveUserVoiceChannelStatusCommandHandler],
 })

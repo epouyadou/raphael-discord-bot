@@ -1,4 +1,7 @@
-import { IUserBasedVoiceChannelConnectionTrackingOrdersRepository } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
+import {
+  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+} from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { UserBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/UserBasedVoiceChannelConnectionTrackingOrder';
 import { Injectable } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
@@ -107,3 +110,8 @@ export class UserBasedVoiceChannelConnectionTrackingOrdersRepository
     await this.postgres.query(query, [guildId, trackerGuildMemberId]);
   }
 }
+
+export const UserBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider = {
+  provide: IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+  useClass: UserBasedVoiceChannelConnectionTrackingOrdersRepository,
+};

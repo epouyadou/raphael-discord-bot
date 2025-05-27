@@ -1,23 +1,13 @@
 import { Module } from '@nestjs/common';
-import { IDateTimeProvider } from './common/MachineTime';
-import {
-  RoleBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider,
-  UserBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider,
-  UserVoiceChannelStatusRecordsRepositoryProvider,
-} from './repositories/RepositoryProviders';
+import { CommonImplModule } from './common/common-impl.module';
+import { CommunicationPlatformImplModule } from './communication-platform/communication-platform-impl.module';
+import { RepositoryImplModule } from './repositories/repository-impl.module';
 
 @Module({
-  providers: [
-    RoleBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider,
-    UserBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider,
-    UserVoiceChannelStatusRecordsRepositoryProvider,
-    IDateTimeProvider,
-  ],
-  exports: [
-    RoleBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider,
-    UserBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider,
-    UserVoiceChannelStatusRecordsRepositoryProvider,
-    IDateTimeProvider,
+  imports: [
+    RepositoryImplModule,
+    CommonImplModule,
+    CommunicationPlatformImplModule,
   ],
 })
 export class InfrastructureModule {}

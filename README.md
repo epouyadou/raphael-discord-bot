@@ -51,7 +51,6 @@ This will rebuild and run the containers.
 - `.github` Github Actions CI/CD
 
 ## Roadmap
-- Refactore command handlers to not use discord.js `Client` class and creating a wrapper in `infrastructure` folder.
 - Create unit test for the commands
 - Add the command `/tracking display` to display user tracking connection orders:
   - Args:

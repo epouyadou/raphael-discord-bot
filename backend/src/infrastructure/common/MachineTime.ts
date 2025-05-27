@@ -13,7 +13,7 @@ export class MachineTime implements IDateTime {
   }
 }
 
-export const IDateTimeProvider = {
+export const MachineTimeProvider = {
   provide: IDateTimeSymbol,
   useClass: MachineTime,
 };

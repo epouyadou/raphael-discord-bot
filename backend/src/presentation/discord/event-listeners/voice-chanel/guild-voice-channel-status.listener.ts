@@ -4,7 +4,6 @@ import { NotifyConnectionOfTrackedUserCommandHandler } from '@application/voice-
 import { NotifyConnectionOfUserWithTrackedRoleCommand } from '@application/voice-channel-connection-tracking/notify-connection-of-user-with-tracked-role/NotifyConnectionOfUserWithTrackedRoleCommand';
 import { NotifyConnectionOfUserWithTrackedRoleCommandHandler } from '@application/voice-channel-connection-tracking/notify-connection-of-user-with-tracked-role/NotifyConnectionOfUserWithTrackedRoleCommandHandler';
 import { Inject, Logger } from '@nestjs/common';
-import { Snowflake } from '@shared/types/snowflake';
 import { Client } from 'discord.js';
 import { Context, ContextOf, On } from 'necord';
 import { SaveUserVoiceChannelStatusCommand } from './../../../../application/user-voice-connection-status/save-user-voice-channel-status/SaveUserVoiceChannelStatusCommand';
@@ -59,8 +58,6 @@ export class GuildVoiceChannelStatusListener {
         guildId: voiceChannel.guildId,
         guildMemberId: member.id,
         voiceChannelId: voiceChannel.id,
-        isInTheVoiceChannel: (userId: Snowflake) =>
-          voiceChannel.members.has(userId),
         alreadyNotifiedGuildMemberIds: [],
       };
 
@@ -82,8 +79,6 @@ export class GuildVoiceChannelStatusListener {
         guildMemberId: member.id,
         guildMemberRoleIds: member.roles.cache.map((role) => role.id),
         voiceChannelId: voiceChannel.id,
-        isInTheVoiceChannel: (userId: Snowflake) =>
-          voiceChannel.members.has(userId),
         alreadyNotifiedGuildMemberIds:
           notifyConnectionOfTrackedUserResult.value,
       };
