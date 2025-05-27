@@ -103,3 +103,4 @@ This will rebuild and run the containers.
         - Without: set current-resine to 0
         - (optional) current-resine: how many resine do you have
         - (optional) threshold: how many resine do you need to have to trigger the reminder
+- Add a rate limit when notifiying someone to avoid being spam
