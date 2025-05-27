@@ -6,7 +6,7 @@ import {
   IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
   IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
-import { Inject, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
 import {
   formatGuildChannelLink,
@@ -15,6 +15,7 @@ import {
 } from 'src/core/utils/discord_formatter';
 import { NotifyConnectionOfUserWithTrackedRoleCommand } from './NotifyConnectionOfUserWithTrackedRoleCommand';
 
+@Injectable()
 export class NotifyConnectionOfUserWithTrackedRoleCommandHandler {
   private readonly logger: Logger = new Logger(
     NotifyConnectionOfUserWithTrackedRoleCommandHandler.name,

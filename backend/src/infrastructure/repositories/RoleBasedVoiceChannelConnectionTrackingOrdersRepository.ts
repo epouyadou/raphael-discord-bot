@@ -3,9 +3,9 @@ import {
   IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { RoleBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
+import { PostgresPool } from '@infrastructure/database/postgres/postgres';
 import { Injectable } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
-import { PostgresPool } from 'src/core/postgres/postgres';
 import { mapAllToRoleBasedVoiceChannelConnectionTrackingOrder } from '../mappers/RoleBasedVoiceChannelConnectionTrackingOrderMapper';
 
 @Injectable()

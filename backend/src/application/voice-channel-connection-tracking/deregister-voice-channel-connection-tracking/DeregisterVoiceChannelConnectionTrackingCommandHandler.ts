@@ -8,9 +8,10 @@ import {
   IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { VoiceChannelConnectionTrackingOrderDomainErrors } from '@domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
-import { Inject, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { DeregisterVoiceChannelConnectionTrackingCommand } from './DeregisterVoiceChannelConnectionTrackingCommand';
 
+@Injectable()
 export class DeregisterVoiceChannelConnectionTrackingCommandHandler {
   private readonly logger: Logger = new Logger(
     DeregisterVoiceChannelConnectionTrackingCommandHandler.name,
@@ -26,6 +27,12 @@ export class DeregisterVoiceChannelConnectionTrackingCommandHandler {
   async handle(
     command: DeregisterVoiceChannelConnectionTrackingCommand,
   ): Promise<Result> {
+    if (command.isRoleBased === true && command.isUserBased === true) {
+      throw new Error(
+        'Command cannot be both role-based and user-based at the same time.',
+      );
+    }
+
     let hasBeenDeregistered = false;
 
     try {
@@ -39,9 +46,7 @@ export class DeregisterVoiceChannelConnectionTrackingCommandHandler {
         this.logger.log(
           `Deleted role connection tracking for guild of role ${command.mentionableId}, by tracker ${command.trackerGuildMemberId} in guild ${command.guildId}`,
         );
-      }
-
-      if (command.isUserBased) {
+      } else if (command.isUserBased) {
         hasBeenDeregistered = await this.userBasedVCCTRepository.delete(
           command.guildId,
           command.trackerGuildMemberId,

@@ -3,8 +3,8 @@ import {
   IUserVoiceChannelStatusRecordsRepositorySymbol,
 } from '@domain/voice-channel-status-records/IUserVoiceChannelStatusRecordsRepository';
 import { VoiceChannelStatusRecord } from '@domain/voice-channel-status-records/VoiceChannelStatusRecord';
+import { PostgresPool } from '@infrastructure/database/postgres/postgres';
 import { Injectable } from '@nestjs/common';
-import { PostgresPool } from 'src/core/postgres/postgres';
 
 @Injectable()
 export class UserVoiceChannelStatusRecordsRepository
