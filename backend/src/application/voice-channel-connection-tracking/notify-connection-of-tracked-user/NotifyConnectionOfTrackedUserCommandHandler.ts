@@ -92,10 +92,10 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
       }
 
       try {
-        await this.communicationPlatform.sendMessageToUser(
-          order.trackerGuildMemberId,
-          `User ${formatGuildUser(command.guildMemberId)} has connected to a voice channel in guild ${formatGuildChannelLink(command.guildId, command.voiceChannelId)}.`,
-        );
+        await this.communicationPlatform.sendMessageToUser({
+          userId: order.trackerGuildMemberId,
+          message: `User ${formatGuildUser(command.guildMemberId)} has connected to a voice channel in guild ${formatGuildChannelLink(command.guildId, command.voiceChannelId)}.`,
+        });
         notifiedUsers.add(order.trackerGuildMemberId);
       } catch (error: unknown) {
         if (error instanceof Error) {

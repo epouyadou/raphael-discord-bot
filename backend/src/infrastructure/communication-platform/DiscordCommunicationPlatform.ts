@@ -110,12 +110,15 @@ export class DiscordCommunicationPlatform implements ICommunicationPlatform {
     return guildMember ? true : false;
   }
 
-  async sendMessageToUser(userId: Snowflake, message: string): Promise<void> {
-    const user = await this.fetchUser(userId);
+  async sendMessageToUser(params: {
+    userId: Snowflake;
+    message: string;
+  }): Promise<void> {
+    const user = await this.fetchUser(params.userId);
     if (!user) {
       return; // User not found
     }
-    await user.send(message);
+    await user.send(params.message);
     return;
   }
 

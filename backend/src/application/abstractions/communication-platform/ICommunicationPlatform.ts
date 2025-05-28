@@ -4,7 +4,10 @@ export const ICommunicationPlatformSymbol = Symbol('ICommunicationPlatform');
 
 export interface ICommunicationPlatform {
   isUserExistInGuild(guildId: Snowflake, userId: Snowflake): Promise<boolean>;
-  sendMessageToUser(userId: Snowflake, message: string): Promise<void>;
+  sendMessageToUser(params: {
+    userId: Snowflake;
+    message: string;
+  }): Promise<void>;
   isInVoiceChannel(
     guildId: Snowflake,
     channelId: Snowflake,

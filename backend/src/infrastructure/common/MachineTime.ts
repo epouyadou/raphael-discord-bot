@@ -9,7 +9,7 @@ export class MachineTime implements IDateTime {
    * @returns {Date} The current UTC date and time.
    */
   utcNow(): Date {
-    return new Date(Date.now());
+    return new Date();
   }
 }
 

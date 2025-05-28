@@ -104,10 +104,10 @@ export class NotifyConnectionOfUserWithTrackedRoleCommandHandler {
       }
 
       try {
-        await this.communicationPlatform.sendMessageToUser(
-          guildMemberIdToNotify,
-          `User ${formatGuildUser(command.guildMemberId)} has connected to a voice channel in guild ${formatGuildChannelLink(command.guildId, command.voiceChannelId)}.`,
-        );
+        await this.communicationPlatform.sendMessageToUser({
+          userId: guildMemberIdToNotify,
+          message: `User ${formatGuildUser(command.guildMemberId)} has connected to a voice channel in guild ${formatGuildChannelLink(command.guildId, command.voiceChannelId)}.`,
+        });
         notifiedUsers.add(guildMemberIdToNotify);
       } catch (error: unknown) {
         if (error instanceof Error) {
