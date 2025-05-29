@@ -66,6 +66,10 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
     );
   });
 
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   describe(`WHEN all the users are not connected or in the same voice channel as the tracked user`, () => {
     describe('WHEN no one tracks the user who joined the voice channel', () => {
       const mockResultOfFindAllByTrackerTrackingOrders: UserBasedVoiceChannelConnectionTrackingOrder[] =
@@ -810,6 +814,55 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
         expect(result.isSuccess()).toBe(true);
         expect(result.value).toEqual([trackerId1, trackerId2, trackerId3]);
       });
+    });
+  });
+  describe(`WHEN the user who joined the voice channel is not in the guild`, () => {
+    it(`Should not notify anyone and delete all tracking orders of the user`, async () => {
+      const guildId = '123456789012345678';
+      const trackerId = '234567890123456789';
+      const trackedId = '345678901234567890';
+      const voiceChannelId = '456789012345678901';
+      const mockResultOfFindAllByTrackerTrackingOrders: UserBasedVoiceChannelConnectionTrackingOrder[] =
+        [
+          UserBasedVoiceChannelConnectionTrackingOrder.create(
+            1,
+            guildId,
+            trackerId,
+            trackedId,
+            new Date(),
+          ),
+        ];
+
+      jest
+        .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+        .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
+
+      const deleteAllOfTrackerSpy = jest
+        .spyOn(userBasedVCCTRepository, 'deleteAllOfTracker')
+        .mockImplementation(() => Promise.resolve());
+
+      communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
+      communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(false);
+      communicationPlatformSendMessageToUserSpy.mockResolvedValue(() =>
+        Promise.resolve(),
+      );
+
+      const command: NotifyConnectionOfTrackedUserCommand = {
+        guildId: guildId,
+        guildMemberId: trackedId,
+        voiceChannelId: voiceChannelId,
+        alreadyNotifiedGuildMemberIds: [],
+      };
+
+      const result = await commandHandler.handle(command);
+      expect(communicationPlatformIsUserExistInGuildSpy).toHaveBeenCalledWith(
+        guildId,
+        trackerId,
+      );
+      expect(deleteAllOfTrackerSpy).toHaveBeenCalledWith(guildId, trackerId);
+      expect(communicationPlatformSendMessageToUserSpy).not.toHaveBeenCalled();
+      expect(result.isSuccess()).toBe(true);
+      expect(result.value).toEqual([]);
     });
   });
 });
