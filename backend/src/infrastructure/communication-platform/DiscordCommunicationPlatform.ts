@@ -5,6 +5,7 @@ import {
   DiscordAPIError,
   Guild,
   GuildMember,
+  Role,
   Snowflake,
   User,
   VoiceChannel,
@@ -42,6 +43,25 @@ export class DiscordCommunicationPlatform implements ICommunicationPlatform {
         );
       }
       return null; // Handle other errors gracefully
+    }
+  }
+
+  private async fetchGuildRole(
+    guild: Guild,
+    roleId: Snowflake,
+  ): Promise<Role | null> {
+    try {
+      const role = await guild.roles.fetch(roleId);
+      return role;
+    } catch (error) {
+      if (error instanceof DiscordAPIError && error.code === 10008) {
+        this.logger.error(`Role ${roleId} not found in guild ${guild.id}`);
+      } else {
+        this.logger.error(
+          `Unexpected error fetching role ${roleId} in guild ${guild.id}: ${error}`,
+        );
+      }
+      return null; // Handle errors gracefully
     }
   }
 
@@ -141,6 +161,24 @@ export class DiscordCommunicationPlatform implements ICommunicationPlatform {
     }
 
     return voiceChannel.members.has(userId);
+  }
+
+  async getUsersByRole(
+    guildId: Snowflake,
+    roleId: Snowflake,
+  ): Promise<Snowflake[]> {
+    const guild = await this.fetchGuild(guildId);
+    if (!guild) {
+      return []; // Guild not found
+    }
+
+    const role = await this.fetchGuildRole(guild, roleId);
+    if (!role) {
+      return []; // Role not found
+    }
+
+    console.log(`The role ${role.name} has ${role.members.size} members.`);
+    return role.members.map((member) => member.id);
   }
 }
 

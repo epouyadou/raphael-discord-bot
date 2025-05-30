@@ -11,9 +11,14 @@ export interface IUserBasedVoiceChannelConnectionTrackingOrdersRepository {
     trackedGuildMemberId: Snowflake,
   ): Promise<boolean>;
 
-  findAllByTrackerTrackingOrders(
+  findAllByTrackedGuildMemberId(
     guildId: Snowflake,
     trackedGuildMemberId: Snowflake,
+  ): Promise<UserBasedVoiceChannelConnectionTrackingOrder[]>;
+
+  findAllByTrackerGuildMemberId(
+    guildId: Snowflake,
+    trackerGuildMemberId: Snowflake,
   ): Promise<UserBasedVoiceChannelConnectionTrackingOrder[]>;
 
   save(

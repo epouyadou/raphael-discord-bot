@@ -19,7 +19,7 @@ export class TypedResult<TValue> extends Result {
     return this._value;
   }
 
-  static typeSuccess<TValue>(value: TValue): TypedResult<TValue> {
+  static typedSuccess<TValue>(value: TValue): TypedResult<TValue> {
     return new TypedResult<TValue>(value, true, BotError.None);
   }
 
@@ -34,7 +34,7 @@ export class TypedResult<TValue> extends Result {
     if (value === undefined || value === null) {
       return this.typedFailure(error);
     } else {
-      return this.typeSuccess(value);
+      return this.typedSuccess(value);
     }
   }
 }

@@ -13,4 +13,5 @@ export interface ICommunicationPlatform {
     channelId: Snowflake,
     userId: Snowflake,
   ): Promise<boolean>;
+  getUsersByRole(guildId: Snowflake, roleId: Snowflake): Promise<Snowflake[]>;
 }

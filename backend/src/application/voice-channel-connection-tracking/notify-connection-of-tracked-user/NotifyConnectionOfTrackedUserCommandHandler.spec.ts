@@ -77,7 +77,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
       it(`Should not notify anyone`, async () => {
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         const command: NotifyConnectionOfTrackedUserCommand = {
@@ -110,7 +110,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
       it(`Should notify one person`, async () => {
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
@@ -172,7 +172,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
         ];
       it(`Should notify multiple people`, async () => {
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
@@ -231,7 +231,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
       it(`Should not notify anyone`, async () => {
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         const command: NotifyConnectionOfTrackedUserCommand = {
@@ -260,7 +260,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
           ];
 
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         communicationPlatformIsInVoiceChannelSpy.mockImplementation(
@@ -305,7 +305,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
           ];
 
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         communicationPlatformIsInVoiceChannelSpy.mockImplementation(
@@ -375,7 +375,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
       it(`Should notify the users connected to none or a different voice channel`, async () => {
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         communicationPlatformIsInVoiceChannelSpy.mockImplementation(
@@ -433,7 +433,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
       });
       it(`Should not notify the users who is already in the voice channel`, async () => {
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         communicationPlatformIsInVoiceChannelSpy.mockImplementation(
@@ -497,7 +497,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
           [];
 
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         const command: NotifyConnectionOfTrackedUserCommand = {
@@ -530,7 +530,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
       it(`Should not notify anyone`, async () => {
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(true);
@@ -610,7 +610,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
       it(`Should not notify anyone`, async () => {
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
         communicationPlatformIsInVoiceChannelSpy.mockImplementation(
@@ -708,7 +708,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
             ),
           ];
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
         communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
         communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
@@ -773,7 +773,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
             ),
           ];
         jest
-          .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
           .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
         communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
         communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
@@ -834,7 +834,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
         ];
 
       jest
-        .spyOn(userBasedVCCTRepository, 'findAllByTrackerTrackingOrders')
+        .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
         .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
 
       const deleteAllOfTrackerSpy = jest
