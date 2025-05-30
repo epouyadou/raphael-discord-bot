@@ -6,7 +6,7 @@ import {
   IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
   IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
-import { Inject, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
 import {
   formatGuildChannelLink,
@@ -15,6 +15,7 @@ import {
 } from 'src/core/utils/discord_formatter';
 import { NotifyConnectionOfUserWithTrackedRoleCommand } from './NotifyConnectionOfUserWithTrackedRoleCommand';
 
+@Injectable()
 export class NotifyConnectionOfUserWithTrackedRoleCommandHandler {
   private readonly logger: Logger = new Logger(
     NotifyConnectionOfUserWithTrackedRoleCommandHandler.name,
@@ -103,10 +104,10 @@ export class NotifyConnectionOfUserWithTrackedRoleCommandHandler {
       }
 
       try {
-        await this.communicationPlatform.sendMessageToUser(
-          guildMemberIdToNotify,
-          `User ${formatGuildUser(command.guildMemberId)} has connected to a voice channel in guild ${formatGuildChannelLink(command.guildId, command.voiceChannelId)}.`,
-        );
+        await this.communicationPlatform.sendMessageToUser({
+          userId: guildMemberIdToNotify,
+          message: `User ${formatGuildUser(command.guildMemberId)} has connected to a voice channel in guild ${formatGuildChannelLink(command.guildId, command.voiceChannelId)}.`,
+        });
         notifiedUsers.add(guildMemberIdToNotify);
       } catch (error: unknown) {
         if (error instanceof Error) {

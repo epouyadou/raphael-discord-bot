@@ -4,7 +4,7 @@ import { RoleBasedVoiceChannelConnectionTrackingOrder } from './RoleBasedVoiceCh
 export const IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol =
   Symbol('IRoleBasedVoiceChannelConnectionTrackingOrdersRepository');
 export interface IRoleBasedVoiceChannelConnectionTrackingOrdersRepository {
-  exist(
+  exists(
     guildId: Snowflake,
     trackerGuildMemberId: Snowflake,
     trackedGuildRoleId: Snowflake,

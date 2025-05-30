@@ -6,13 +6,11 @@ import { DiscordModule } from '@presentation/discord/discord.module';
 import { IntentsBitField } from 'discord.js';
 import { NecordModule } from 'necord';
 import { AppService } from './app.service';
-import { PostgresModule } from './core/postgres/postgres.module';
 import { getEnv } from './core/utils/env';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    PostgresModule,
     NecordModule.forRoot({
       token: getEnv('DISCORD_TOKEN'),
       intents: [

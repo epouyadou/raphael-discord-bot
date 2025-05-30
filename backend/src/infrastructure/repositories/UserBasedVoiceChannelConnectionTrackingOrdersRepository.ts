@@ -3,9 +3,9 @@ import {
   IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { UserBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/UserBasedVoiceChannelConnectionTrackingOrder';
+import { PostgresPool } from '@infrastructure/database/postgres/postgres';
 import { Injectable } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
-import { PostgresPool } from 'src/core/postgres/postgres';
 import { mapAllToUserBasedVoiceChannelConnectionTrackingOrder } from '../mappers/UserBasedVoiceChannelConnectionTrackingOrderMapper';
 
 @Injectable()

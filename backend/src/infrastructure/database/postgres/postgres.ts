@@ -1,6 +1,6 @@
 import { Pool, PoolClient } from 'pg';
+import { getEnv } from 'src/core/utils/env';
 import { v4 as uuidv4 } from 'uuid';
-import { getEnv } from '../utils/env';
 
 let pool: PostgresPool | undefined = undefined;
 export function getPool() {

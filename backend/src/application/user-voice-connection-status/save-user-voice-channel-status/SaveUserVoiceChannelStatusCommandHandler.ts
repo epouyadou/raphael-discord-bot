@@ -3,9 +3,10 @@ import {
   IUserVoiceChannelStatusRecordsRepositorySymbol,
 } from '@domain/voice-channel-status-records/IUserVoiceChannelStatusRecordsRepository';
 import { VoiceChannelStatusRecord } from '@domain/voice-channel-status-records/VoiceChannelStatusRecord';
-import { Inject, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger } from '@nestjs/common';
 import { SaveUserVoiceChannelStatusCommand } from './SaveUserVoiceChannelStatusCommand';
 
+@Injectable()
 export class SaveUserVoiceChannelStatusCommandHandler {
   private readonly logger: Logger = new Logger(
     SaveUserVoiceChannelStatusCommandHandler.name,
