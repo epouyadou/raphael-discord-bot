@@ -1,6 +1,6 @@
 import {
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { RoleBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
 import { PostgresPool } from '@infrastructure/database/postgres/postgres';
@@ -14,7 +14,7 @@ export class RoleBasedVoiceChannelConnectionTrackingOrdersRepository
 {
   constructor(private readonly postgres: PostgresPool) {}
 
-  async exist(
+  async exists(
     guildId: Snowflake,
     trackerGuildMemberId: Snowflake,
     trackedGuildRoleId: Snowflake,

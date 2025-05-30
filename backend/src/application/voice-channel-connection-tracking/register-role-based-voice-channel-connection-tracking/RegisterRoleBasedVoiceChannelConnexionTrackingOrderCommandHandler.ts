@@ -28,7 +28,7 @@ export class RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler {
   async handle(
     command: RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommand,
   ): Promise<Result> {
-    const isAlreadyTracked: boolean = await this.repository.exist(
+    const isAlreadyTracked: boolean = await this.repository.exists(
       command.guildId,
       command.trackerGuildMemberId,
       command.trackedGuildRoleId,
