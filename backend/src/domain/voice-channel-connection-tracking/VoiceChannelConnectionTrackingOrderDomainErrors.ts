@@ -24,4 +24,9 @@ export class VoiceChannelConnectionTrackingOrderDomainErrors {
     'VoiceChannelConnectionTrackingOrderDomainErrors.NotFound',
     'The voice channel connection tracking order was not found. It may have already been deleted or never existed.',
   );
+
+  static readonly UserNotInGuild = new BotError(
+    'VoiceChannelConnectionTrackingOrderDomainErrors.UserNotInGuild',
+    'The mentioned user is not in the guild. Are you sure they are a member of this server?',
+  );
 }

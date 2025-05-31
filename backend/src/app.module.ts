@@ -18,6 +18,7 @@ import { getEnv } from './core/utils/env';
         IntentsBitField.Flags.GuildVoiceStates,
         IntentsBitField.Flags.DirectMessages,
         IntentsBitField.Flags.MessageContent,
+        IntentsBitField.Flags.GuildPresences,
       ],
       development: getEnv('DISCORD_DEVELOPMENT_GUILD_IDs'),
     }),

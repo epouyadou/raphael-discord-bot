@@ -31,7 +31,7 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
   async handle(
     command: NotifyConnectionOfTrackedUserCommand,
   ): Promise<TypedResult<Snowflake[]>> {
-    const trackingOrders = await this.repository.findAllByTrackerTrackingOrders(
+    const trackingOrders = await this.repository.findAllByTrackedGuildMemberId(
       command.guildId,
       command.guildMemberId,
     );
@@ -40,7 +40,7 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
       this.logger.log(
         `No tracking orders found for guild member ${command.guildMemberId}. No notifications will be sent.`,
       );
-      return TypedResult.typeSuccess([]);
+      return TypedResult.typedSuccess([]);
     }
 
     this.logger.log(
@@ -116,6 +116,6 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
       `Sent notifications to ${notifiedUsers.size} user(s) for the connection of user ${command.guildMemberId}.`,
     );
 
-    return TypedResult.typeSuccess(Array.from(notifiedUsers));
+    return TypedResult.typedSuccess(Array.from(notifiedUsers));
   }
 }

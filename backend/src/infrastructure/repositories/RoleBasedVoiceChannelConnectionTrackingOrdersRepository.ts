@@ -1,6 +1,6 @@
 import {
-    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { RoleBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
 import { PostgresPool } from '@infrastructure/database/postgres/postgres';
@@ -50,6 +50,25 @@ export class RoleBasedVoiceChannelConnectionTrackingOrdersRepository
     const result = await this.postgres.query(query, [
       guildId,
       trackedtrackedRoles,
+    ]);
+
+    return mapAllToRoleBasedVoiceChannelConnectionTrackingOrder(result);
+  }
+
+  async findAllByTrackerGuildMemberId(
+    guildId: Snowflake,
+    trackerGuildMemberId: Snowflake,
+  ): Promise<RoleBasedVoiceChannelConnectionTrackingOrder[]> {
+    const query = `
+      SELECT *
+      FROM raphaeldb.role_based_voice_channel_connection_tracking_orders
+      WHERE guild_id = $1
+        AND tracker_guild_member_id = $2
+    `;
+
+    const result = await this.postgres.query(query, [
+      guildId,
+      trackerGuildMemberId,
     ]);
 
     return mapAllToRoleBasedVoiceChannelConnectionTrackingOrder(result);

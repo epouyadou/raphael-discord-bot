@@ -15,6 +15,11 @@ export interface IRoleBasedVoiceChannelConnectionTrackingOrdersRepository {
     trackedtrackedRoles: Snowflake[],
   ): Promise<RoleBasedVoiceChannelConnectionTrackingOrder[]>;
 
+  findAllByTrackerGuildMemberId(
+    guildId: Snowflake,
+    trackerGuildMemberId: Snowflake,
+  ): Promise<RoleBasedVoiceChannelConnectionTrackingOrder[]>;
+
   save(
     roleBasedVoiceChannelConnectionTrackingOrder: RoleBasedVoiceChannelConnectionTrackingOrder,
   ): Promise<void>;

@@ -36,7 +36,7 @@ export class UserBasedVoiceChannelConnectionTrackingOrdersRepository
     return result.rowCount !== null && result.rowCount > 0;
   }
 
-  async findAllByTrackerTrackingOrders(
+  async findAllByTrackedGuildMemberId(
     guildId: Snowflake,
     trackedGuildMemberId: Snowflake,
   ): Promise<UserBasedVoiceChannelConnectionTrackingOrder[]> {
@@ -50,6 +50,24 @@ export class UserBasedVoiceChannelConnectionTrackingOrdersRepository
     const result = await this.postgres.query(query, [
       guildId,
       trackedGuildMemberId,
+    ]);
+
+    return mapAllToUserBasedVoiceChannelConnectionTrackingOrder(result);
+  }
+
+  async findAllByTrackerGuildMemberId(
+    guildId: Snowflake,
+    trackerGuildMemberId: Snowflake,
+  ): Promise<UserBasedVoiceChannelConnectionTrackingOrder[]> {
+    const query = `
+      SELECT *
+      FROM raphaeldb.user_based_voice_channel_connection_tracking_orders
+      WHERE guild_id = $1
+        AND tracker_guild_member_id = $2
+    `;
+    const result = await this.postgres.query(query, [
+      guildId,
+      trackerGuildMemberId,
     ]);
 
     return mapAllToUserBasedVoiceChannelConnectionTrackingOrder(result);
