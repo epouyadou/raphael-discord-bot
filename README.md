@@ -51,15 +51,6 @@ This will rebuild and run the containers.
 - `.github` Github Actions CI/CD
 
 ## Roadmap
-- Create unit test for the commands
-- Add the command `/tracking display` to display user tracking connection orders:
-  - Args:
-    - Without: Display current user tracking connection orders
-    - (Optional) mention:
-      - `ROLE` mention: Display all the users tracking this role
-      - `USER` mention: 
-        - Display all the user's tracking connection orders
-        - Display all the tracking connection orders created by the user
 - Add security, to the existing commands, to not send connection notification if the tracked user is in a channel not accessible by the tracker.
 - Add the command `/log voice-connection` to display the last voice connection in the guild:
   - Specifications:
