@@ -4,6 +4,7 @@ import { RepositoryImplModule } from '@infrastructure/repositories/repository-im
 import { Module } from '@nestjs/common';
 import { DeregisterVoiceChannelConnectionTrackingCommandHandler } from './deregister-voice-channel-connection-tracking/DeregisterVoiceChannelConnectionTrackingCommandHandler';
 import { GetUserTrackingConnectionOrdersQueryHandler } from './get-user-tracking-connection-orders/GetUserTrackingConnectionOrdersQueryHandler';
+import { GetUsersTrackingRoleConnectionQueryHandler } from './get-users-tracking-role-connection/GetUsersTrackingRoleConnectionQueryHandler';
 import { NotifyConnectionOfTrackedUserCommandHandler } from './notify-connection-of-tracked-user/NotifyConnectionOfTrackedUserCommandHandler';
 import { NotifyConnectionOfUserWithTrackedRoleCommandHandler } from './notify-connection-of-user-with-tracked-role/NotifyConnectionOfUserWithTrackedRoleCommandHandler';
 import { RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler } from './register-role-based-voice-channel-connection-tracking/RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler';
@@ -17,6 +18,7 @@ import { RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler } fro
   ],
   providers: [
     GetUserTrackingConnectionOrdersQueryHandler,
+    GetUsersTrackingRoleConnectionQueryHandler,
     DeregisterVoiceChannelConnectionTrackingCommandHandler,
     NotifyConnectionOfTrackedUserCommandHandler,
     NotifyConnectionOfUserWithTrackedRoleCommandHandler,
@@ -25,6 +27,7 @@ import { RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler } fro
   ],
   exports: [
     GetUserTrackingConnectionOrdersQueryHandler,
+    GetUsersTrackingRoleConnectionQueryHandler,
     DeregisterVoiceChannelConnectionTrackingCommandHandler,
     NotifyConnectionOfTrackedUserCommandHandler,
     NotifyConnectionOfUserWithTrackedRoleCommandHandler,

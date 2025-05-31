@@ -4,6 +4,8 @@ import {
   TrackerType,
 } from '@application/voice-channel-connection-tracking/get-user-tracking-connection-orders/GetUserTrackingConnectionOrdersQuery';
 import { GetUserTrackingConnectionOrdersQueryHandler } from '@application/voice-channel-connection-tracking/get-user-tracking-connection-orders/GetUserTrackingConnectionOrdersQueryHandler';
+import { GetUsersTrackingRoleConnectionQuery } from '@application/voice-channel-connection-tracking/get-users-tracking-role-connection/GetUsersTrackingRoleConnectionQuery';
+import { GetUsersTrackingRoleConnectionQueryHandler } from '@application/voice-channel-connection-tracking/get-users-tracking-role-connection/GetUsersTrackingRoleConnectionQueryHandler';
 import { Logger } from '@nestjs/common';
 import { GuildMember, Role, User } from 'discord.js';
 import {
@@ -39,7 +41,7 @@ export class DisplayTrackingConnectionOrderDiscordCommand {
 
   constructor(
     private readonly getUserTrackingConnectionOrdersQueryHandler: GetUserTrackingConnectionOrdersQueryHandler,
-    //private readonly getUserRoleTrackingConnectionOrdersQueryHandler: GetUserRoleTrackingConnectionOrdersQueryHandler,
+    private readonly getUsersTrackingRoleConnectionQueryHandler: GetUsersTrackingRoleConnectionQueryHandler,
   ) {}
 
   @Subcommand({
@@ -93,9 +95,35 @@ export class DisplayTrackingConnectionOrderDiscordCommand {
     }
 
     if (mentionable instanceof Role) {
-      // TODO: Display all the users tracking this role
+      const query: GetUsersTrackingRoleConnectionQuery = {
+        guildId,
+        roleId: mentionable.id,
+      };
+
+      const result =
+        await this.getUsersTrackingRoleConnectionQueryHandler.handle(query);
+
+      if (result.isFailure()) {
+        return interaction.reply({
+          content: result.error.message,
+        });
+      }
+
+      if (result.value.userIds.length === 0) {
+        return interaction.reply({
+          content: `No users are tracking the role ${formatGuildRole(mentionable.id)}.`,
+        });
+      }
+
       return interaction.reply({
-        content: 'This feature is not implemented yet.',
+        content: `The following users are tracking the role ${formatGuildRole(mentionable.id)}:\n${result.value.userIds
+          .map((userId) => formatGuildUser(userId))
+          .join(', ')}`,
+        allowedMentions: {
+          repliedUser: false,
+          roles: [],
+          users: [],
+        },
       });
     }
 
