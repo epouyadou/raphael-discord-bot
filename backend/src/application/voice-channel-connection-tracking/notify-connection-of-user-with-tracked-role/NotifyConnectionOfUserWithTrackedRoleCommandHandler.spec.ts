@@ -28,6 +28,7 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
   let communicationPlatformIsInVoiceChannelSpy: jest.SpyInstance;
   let communicationPlatformIsUserExistInGuildSpy: jest.SpyInstance;
   let communicationPlatformSendMessageToUserSpy: jest.SpyInstance;
+  let communicationPlatformHasPermissionToAccessTheVoiceChannelSpy: jest.SpyInstance;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -81,6 +82,11 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
     communicationPlatformSendMessageToUserSpy.mockResolvedValue(() =>
       Promise.resolve(),
     );
+
+    communicationPlatformHasPermissionToAccessTheVoiceChannelSpy = jest.spyOn(
+      communicationPlatform,
+      'hasPermissionToAccessTheVoiceChannel',
+    );
   });
 
   afterEach(() => {
@@ -123,6 +129,9 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
 
       communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
       communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
 
       await commandHandler.handle(command);
 
@@ -152,6 +161,9 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
 
       communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(true);
       communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
 
       await commandHandler.handle(command);
 
@@ -177,6 +189,9 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
 
       communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
       communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
 
       await commandHandler.handle(command);
 
@@ -197,6 +212,9 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
 
       communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
       communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(false);
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
 
       await commandHandler.handle(command);
 
@@ -222,6 +240,9 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
 
       communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(true);
       communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
 
       await commandHandler.handle(command);
 
@@ -249,6 +270,29 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
       expect(
         roleBasedVCCTRepositoryFindAllByTrackedTrackedRolesSpy,
       ).toHaveBeenCalledWith(guildId, command.guildMemberRoleIds);
+      expect(communicationPlatformSendMessageToUserSpy).not.toHaveBeenCalled();
+    });
+
+    it(`Should not notify users if they do not have permission to access the voice channel`, async () => {
+      const command: NotifyConnectionOfUserWithTrackedRoleCommand = {
+        guildId,
+        guildMemberId,
+        voiceChannelId,
+        guildMemberRoleIds,
+        alreadyNotifiedGuildMemberIds,
+      };
+
+      communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
+      communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        false,
+      );
+
+      await commandHandler.handle(command);
+
+      expect(
+        roleBasedVCCTRepositoryFindAllByTrackedTrackedRolesSpy,
+      ).toHaveBeenCalledWith(guildId, guildMemberRoleIds);
       expect(communicationPlatformSendMessageToUserSpy).not.toHaveBeenCalled();
     });
   });

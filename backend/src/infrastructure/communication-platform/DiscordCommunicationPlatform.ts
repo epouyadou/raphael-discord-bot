@@ -5,6 +5,7 @@ import {
   DiscordAPIError,
   Guild,
   GuildMember,
+  PermissionFlagsBits,
   Role,
   Snowflake,
   User,
@@ -179,6 +180,34 @@ export class DiscordCommunicationPlatform implements ICommunicationPlatform {
 
     console.log(`The role ${role.name} has ${role.members.size} members.`);
     return role.members.map((member) => member.id);
+  }
+
+  async hasPermissionToAccessTheVoiceChannel(
+    guildId: Snowflake,
+    channelId: Snowflake,
+    userId: Snowflake,
+  ): Promise<boolean> {
+    const guild = await this.fetchGuild(guildId);
+    if (!guild) {
+      return false; // Guild not found
+    }
+
+    const voiceChannel = await this.fetchVoiceChannelFromGuild(
+      guild,
+      channelId,
+    );
+    if (!voiceChannel) {
+      return false; // Voice channel not found
+    }
+
+    const member = await this.fetchGuildMembersFromGuild(guild, userId);
+    if (!member) {
+      return false; // Member not found
+    }
+
+    return member
+      .permissionsIn(voiceChannel)
+      .has(PermissionFlagsBits.ViewChannel | PermissionFlagsBits.Connect);
   }
 }
 
