@@ -59,6 +59,20 @@ export class NotifyConnectionOfTrackedUserCommandHandler {
         continue;
       }
 
+      const hasAccessToTheVoiceChannel =
+        await this.communicationPlatform.hasPermissionToAccessTheVoiceChannel(
+          command.guildId,
+          command.voiceChannelId,
+          order.trackerGuildMemberId,
+        );
+
+      if (!hasAccessToTheVoiceChannel) {
+        this.logger.log(
+          `User ${order.trackerGuildMemberId} does not have permission to access the voice channel ${command.voiceChannelId} in guild ${command.guildId}. Skipping notification.`,
+        );
+        continue;
+      }
+
       const isInVoiceChannel =
         await this.communicationPlatform.isInVoiceChannel(
           command.guildId,

@@ -24,6 +24,7 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
   let communicationPlatformIsInVoiceChannelSpy: jest.SpyInstance;
   let communicationPlatformIsUserExistInGuildSpy: jest.SpyInstance;
   let communicationPlatformSendMessageToUserSpy: jest.SpyInstance;
+  let communicationPlatformHasPermissionToAccessTheVoiceChannelSpy: jest.SpyInstance;
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -64,6 +65,11 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
       communicationPlatform,
       'sendMessageToUser',
     );
+
+    communicationPlatformHasPermissionToAccessTheVoiceChannelSpy = jest.spyOn(
+      communicationPlatform,
+      'hasPermissionToAccessTheVoiceChannel',
+    );
   });
 
   afterEach(() => {
@@ -74,6 +80,12 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
     describe('WHEN no one tracks the user who joined the voice channel', () => {
       const mockResultOfFindAllByTrackerTrackingOrders: UserBasedVoiceChannelConnectionTrackingOrder[] =
         [];
+
+      beforeEach(() => {
+        communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+          true,
+        );
+      });
 
       it(`Should not notify anyone`, async () => {
         jest
@@ -115,6 +127,9 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
         communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
         communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
+        communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+          true,
+        );
         communicationPlatformSendMessageToUserSpy.mockResolvedValue(() =>
           Promise.resolve(),
         );
@@ -177,6 +192,9 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
         communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
         communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
+        communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+          true,
+        );
         communicationPlatformSendMessageToUserSpy.mockResolvedValue(() =>
           Promise.resolve(),
         );
@@ -210,6 +228,60 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
         expect(result.isSuccess()).toBe(true);
         expect(result.value).toEqual([trackerId1, trackerId2, trackerId3]);
       });
+
+      it(`Should not notify the users who do not have permission to access the voice channel`, async () => {
+        const mockResultOfFindAllByTrackerTrackingOrders: UserBasedVoiceChannelConnectionTrackingOrder[] =
+          [
+            UserBasedVoiceChannelConnectionTrackingOrder.create(
+              1,
+              guildId,
+              trackerId1,
+              trackedId,
+              new Date(),
+            ),
+            UserBasedVoiceChannelConnectionTrackingOrder.create(
+              2,
+              guildId,
+              trackerId2,
+              trackedId,
+              new Date(),
+            ),
+            UserBasedVoiceChannelConnectionTrackingOrder.create(
+              3,
+              guildId,
+              trackerId3,
+              trackedId,
+              new Date(),
+            ),
+          ];
+
+        jest
+          .spyOn(userBasedVCCTRepository, 'findAllByTrackedGuildMemberId')
+          .mockResolvedValueOnce(mockResultOfFindAllByTrackerTrackingOrders);
+
+        communicationPlatformIsInVoiceChannelSpy.mockResolvedValue(false);
+        communicationPlatformIsUserExistInGuildSpy.mockResolvedValue(true);
+        communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+          false,
+        );
+        communicationPlatformSendMessageToUserSpy.mockResolvedValue(() =>
+          Promise.resolve(),
+        );
+
+        const command: NotifyConnectionOfTrackedUserCommand = {
+          guildId: guildId,
+          guildMemberId: trackedId,
+          voiceChannelId: voiceChannelId,
+          alreadyNotifiedGuildMemberIds: [],
+        };
+
+        const result = await commandHandler.handle(command);
+        expect(
+          communicationPlatformSendMessageToUserSpy,
+        ).not.toHaveBeenCalled();
+        expect(result.isSuccess()).toBe(true);
+        expect(result.value).toEqual([]);
+      });
     });
   });
   describe(`WHEN some users are in the same voice channel as the tracked user`, () => {
@@ -224,6 +296,12 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
     const trackedId = '789012345678901234';
     const idsOfUserInTheSameChannel = [userId2, userId5];
     const idsOfUserNotInTheSameChannel = [userId1, userId3, userId4];
+
+    beforeEach(() => {
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
+    });
 
     describe('WHEN no one tracks the user who joined the voice channel', () => {
       const mockResultOfFindAllByTrackerTrackingOrders: UserBasedVoiceChannelConnectionTrackingOrder[] =
@@ -491,6 +569,12 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
     });
   });
   describe(`WHEN all users are in the same voice channel as the tracked user`, () => {
+    beforeEach(() => {
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
+    });
+
     describe('WHEN no one tracks the user who joined the voice channel', () => {
       it(`Should not notify anyone`, async () => {
         const mockResultOfFindAllByTrackerTrackingOrders: UserBasedVoiceChannelConnectionTrackingOrder[] =
@@ -680,6 +764,12 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
     const trackedId = '545678901234567890';
     const voiceChannelId = '656789012345678901';
 
+    beforeEach(() => {
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
+    });
+
     describe(`WHEN one of the trackers was already notified`, () => {
       it(`Should not notify the already notified user`, async () => {
         const idOfTheTrackerAlreadyNotified = trackerId2;
@@ -817,6 +907,12 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
     });
   });
   describe(`WHEN the user who joined the voice channel is not in the guild`, () => {
+    beforeEach(() => {
+      communicationPlatformHasPermissionToAccessTheVoiceChannelSpy.mockResolvedValue(
+        true,
+      );
+    });
+
     it(`Should not notify anyone and delete all tracking orders of the user`, async () => {
       const guildId = '123456789012345678';
       const trackerId = '234567890123456789';

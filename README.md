@@ -51,7 +51,6 @@ This will rebuild and run the containers.
 - `.github` Github Actions CI/CD
 
 ## Roadmap
-- Add security, to the existing commands, to not send connection notification if the tracked user is in a channel not accessible by the tracker.
 - Add the command `/log voice-connection` to display the last voice connection in the guild:
   - Specifications:
     - Exclude channel that the invoker don't see.
