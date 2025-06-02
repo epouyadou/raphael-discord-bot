@@ -51,7 +51,6 @@ This will rebuild and run the containers.
 - `.github` Github Actions CI/CD
 
 ## Roadmap
-- Rework `/tracking display` command to only display user tracked directly.
 - Add the command `/log voice-connection` to display the last voice connection in the guild:
   - Specifications:
     - Exclude channel that the invoker don't see.
