@@ -133,7 +133,7 @@ export class GetUserTrackingConnectionOrdersQueryHandler {
         trackedRoleCount: trackedRoleInformation.length,
         totalTrackedUsers: alltrackedUsers.size,
         totalTrackingOrders: totalTrackingOrders,
-        trackedUsers: Array.from(alltrackedUsers),
+        trackedUsers: Array.from(trackedUsers),
         trackedRoles: trackedRoleInformation,
       },
     );
