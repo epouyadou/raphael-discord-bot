@@ -51,7 +51,6 @@ This will rebuild and run the containers.
 - `.github` Github Actions CI/CD
 
 ## Roadmap
-- Add a message when a user want to track someone or a role to tell him how to allow MP if he doesn't allow MP.
 - Add the command `/log voice-connection` to display the last voice connection in the guild:
   - Specifications:
     - Exclude channel that the invoker don't see.
