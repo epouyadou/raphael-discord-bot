@@ -6,6 +6,7 @@ import { Logger } from '@nestjs/common';
 import {
   CacheType,
   ChatInputCommandInteraction,
+  DiscordAPIError,
   GuildMember,
   MessageFlags,
   Role,
@@ -22,6 +23,7 @@ import {
   formatGuildRole,
   formatGuildUser,
 } from 'src/core/utils/discord_formatter';
+import { StringBuilder } from 'src/core/utils/string_builder';
 import { TrackingGroupCommandDecorator } from '../../TrackingGroupCommandDecorator';
 
 export class NotifyMeOnVoiceChannelConnectionDto {
@@ -112,10 +114,26 @@ export class RegisterVoiceChannelConnectionTrackingDiscordCommand {
       return;
     }
 
-    await interaction.reply({
-      content: `You will be notified when ${formatGuildUser(mentionable.id)} connects to a vocal channel.`,
-      flags: MessageFlags.Ephemeral,
-    });
+    try {
+      await member.send({
+        content: `You will be notified when ${formatGuildUser(mentionable.id)} connects to a vocal channel.`,
+      });
+    } catch (error) {
+      if (error instanceof DiscordAPIError) {
+        this.logger.log(
+          `Failed to send DM to user ${member.id}: ${error.message}`,
+        );
+        await interaction.reply({
+          content: this.getSentDMErrorMessage(mentionable),
+          flags: MessageFlags.Ephemeral,
+        });
+      } else {
+        this.logger.error(
+          `An unexpected error occurred while sending DM to user ${member.id}: ${error}`,
+        );
+      }
+      return;
+    }
   }
 
   private async registerRoleBased(
@@ -146,9 +164,48 @@ export class RegisterVoiceChannelConnectionTrackingDiscordCommand {
       return;
     }
 
-    await interaction.reply({
-      content: `You will be notified when someone with the ${formatGuildRole(mentionable.id)} role connects to a vocal channel.`,
-      flags: MessageFlags.Ephemeral,
-    });
+    try {
+      await member.send({
+        content: `You will be notified when a user with the ${formatGuildRole(mentionable.id)} role connects to a vocal channel.`,
+      });
+    } catch (error) {
+      if (error instanceof DiscordAPIError) {
+        this.logger.log(
+          `Failed to send DM to user ${member.id}: ${error.message}`,
+        );
+        await interaction.reply({
+          content: this.getSentDMErrorMessage(mentionable),
+          flags: MessageFlags.Ephemeral,
+        });
+      } else {
+        this.logger.error(
+          `An unexpected error occurred while sending DM to user ${member.id}: ${error}`,
+        );
+      }
+      return;
+    }
+  }
+
+  private getSentDMErrorMessage(mentionable: GuildMember | Role): string {
+    const stringBuilder: StringBuilder = new StringBuilder();
+    stringBuilder.append(
+      `Your tracking order has been registered, but you will not receive notifications when `,
+    );
+
+    if (mentionable instanceof GuildMember) {
+      stringBuilder.append(formatGuildUser(mentionable.id));
+    } else {
+      stringBuilder.append(
+        `a user with the ${formatGuildRole(mentionable.id)} role`,
+      );
+    }
+
+    stringBuilder.appendLine(
+      ` connects to a vocal channel unless you allow DMs from this server.`,
+    );
+    stringBuilder.append(
+      `Please change your server privacy settings and try again.`,
+    );
+    return stringBuilder.toString();
   }
 }
