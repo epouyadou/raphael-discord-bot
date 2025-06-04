@@ -94,3 +94,7 @@ This will rebuild and run the containers.
         - (optional) current-resine: how many resine do you have
         - (optional) threshold: how many resine do you need to have to trigger the reminder
 - Add a rate limit when notifiying someone to avoid being spam
+- Add the command `/disallow tracking` to prevent a the user from being tracked. This should also remove :
+  - All tracking orders he created.
+  - All tracking orders that track him.
+  - Remove all connection logs about him.
