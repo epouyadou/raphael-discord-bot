@@ -74,7 +74,7 @@ This will rebuild and run the containers.
     - `traking connection orders`: Display the ranking of users order by who has the most tracking connection orders
       - Args
         - (optional) order: `ASC` (older to newest) or `DESC` (newest to older)
-- Add the command `/remind`
+- Add the command `/genshin-remind`
   - Specifications:
     - Add redis to cache alarms (To optimize the check every minutes with a smaller set)
       - Dispose and Load the next chunk every given interval (1h, 10 minutes)
@@ -88,7 +88,7 @@ This will rebuild and run the containers.
   - Sub-commands:
     - Specifications:
       - each 8 minutes -> +1 resine
-    - `genshin-resine`: Remind the user to spend his resine when its full or at the given value
+    - `resine`: Remind the user to spend his resine when its full or at the given value
       - Args
         - Without: set current-resine to 0
         - (optional) current-resine: how many resine do you have
