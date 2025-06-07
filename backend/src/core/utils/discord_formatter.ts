@@ -40,7 +40,3 @@ export function formatGuildChannelLink(
 ): string {
   return `https://discord.com/channels/${guildId}/${channelId}`;
 }
-
-export function formatVoiceChannel(channelId: Snowflake) {
-  return `<#${channelId}>`;
-}

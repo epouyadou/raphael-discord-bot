@@ -2,7 +2,7 @@ import { Snowflake } from '@shared/types/snowflake';
 import { Ensure } from '../core/guards/Ensure';
 
 export class VoiceChannelStatusRecord {
-  id: number | undefined;
+  id: string | undefined;
   guildId: Snowflake;
   guildMemberId: Snowflake;
   fromVoiceChannelId: Snowflake | null;
@@ -10,7 +10,7 @@ export class VoiceChannelStatusRecord {
   createdAt: Date;
 
   private constructor(
-    id: number | undefined,
+    id: string | undefined,
     guildId: Snowflake,
     guildMemberId: Snowflake,
     fromVoiceChannelId: Snowflake | null,
@@ -26,7 +26,7 @@ export class VoiceChannelStatusRecord {
   }
 
   static create(
-    id: number | undefined,
+    id: string | undefined,
     guildId: Snowflake,
     guildMemberId: Snowflake,
     fromVoiceChannelId: Snowflake | null,
