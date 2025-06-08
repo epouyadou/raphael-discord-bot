@@ -2,6 +2,7 @@ import { VoiceChannelStatusRecord } from '@domain/voice-channel-status-records/V
 import { OrderingType } from '../../../domain/core/primitives/OrderingType';
 
 export type GetLastUserVoiceChannelConnectionStatusQuery = {
+  querierId: string;
   guildId: string;
   userId: string;
   cursor?: number;
