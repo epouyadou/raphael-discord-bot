@@ -1,13 +1,18 @@
+import {
+  IDateTimeFormatter,
+  IDateTimeFormatterSymbol,
+} from '@application/abstractions/common/IDateTimeFormatter';
 import { GetLastUserVoiceChannelConnectionStatusQuery } from '@application/user-voice-connection-status/get-user-voice-connection-status/GetLastUserVoiceChannelConnectionStatusQuery';
 import { GetLastUserVoiceChannelConnectionStatusQueryHandler } from '@application/user-voice-connection-status/get-user-voice-connection-status/GetLastUserVoiceChannelConnectionStatusQueryHandler';
 import { OrderingType } from '@domain/core/primitives/OrderingType';
-import { Logger } from '@nestjs/common';
+import { Inject, Logger } from '@nestjs/common';
 import {
   CacheType,
   ChatInputCommandInteraction,
   GuildMember,
   MessageFlags,
   Role,
+  Snowflake,
   User,
 } from 'discord.js';
 import {
@@ -59,6 +64,8 @@ export class LogUserVoiceConnectionStatusDiscordCommand {
 
   constructor(
     private readonly getLastUserVoiceConnectionStatusQueryHandler: GetLastUserVoiceChannelConnectionStatusQueryHandler,
+    @Inject(IDateTimeFormatterSymbol)
+    private readonly dateTimeFromatter: IDateTimeFormatter,
   ) {}
 
   @Subcommand({
@@ -72,7 +79,7 @@ export class LogUserVoiceConnectionStatusDiscordCommand {
     const member = interaction.member as GuildMember;
 
     if (!mentionable) {
-      await this.displayUserLogs(interaction, member, order);
+      await this.displayUserLogs(interaction, member.id, member, order);
       return;
     }
 
@@ -93,16 +100,20 @@ export class LogUserVoiceConnectionStatusDiscordCommand {
       });
       return;
     }
+
+    await this.displayUserLogs(interaction, member.id, mentionable, order);
   }
 
   private async displayUserLogs(
     interaction: ChatInputCommandInteraction<CacheType>,
-    member: GuildMember,
+    querierId: Snowflake,
+    user: GuildMember,
     order: OrderingType | undefined,
   ): Promise<void> {
     const query: GetLastUserVoiceChannelConnectionStatusQuery = {
+      querierId: querierId,
       guildId: interaction.guild!.id,
-      userId: member.id,
+      userId: user.id,
       cursor: 0,
       orderedBy: order || OrderingType.DESC,
     };
@@ -112,7 +123,7 @@ export class LogUserVoiceConnectionStatusDiscordCommand {
 
     if (result.userVoiceConnectionStatus.length === 0) {
       await interaction.reply({
-        content: `No voice connection logs found for ${formatGuildUser(member.id)}.`,
+        content: `No voice connection logs found for ${formatGuildUser(user.id)}.`,
         allowedMentions: {
           repliedUser: false,
           roles: [],
@@ -127,7 +138,7 @@ export class LogUserVoiceConnectionStatusDiscordCommand {
       .join('\n');
 
     await interaction.reply({
-      content: `Voice connection logs for ${formatGuildUser(member.id)}:\n${logs}`,
+      content: `Voice connection logs for ${formatGuildUser(user.id)}:\n${logs}`,
       allowedMentions: {
         repliedUser: false,
         roles: [],
@@ -141,7 +152,7 @@ export class LogUserVoiceConnectionStatusDiscordCommand {
     fromVoiceChannelId: string | null;
     toVoiceChannelId: string | null;
   }): string {
-    let formatedLog = `${record.createdAt.toISOString()} - `;
+    let formatedLog = `${this.dateTimeFromatter.formatDateTime(record.createdAt)} - `;
 
     if (record.fromVoiceChannelId === null && record.toVoiceChannelId) {
       formatedLog += `Connection to the voice channel ${formatVoiceChannel(record.toVoiceChannelId)}.`;
