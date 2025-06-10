@@ -6,10 +6,17 @@ export const IUserVoiceChannelStatusRecordsRepositorySymbol = Symbol(
 );
 
 export interface IUserVoiceChannelStatusRecordsRepository {
-  getFromUserIdAndGuildId(
+  fetchAllFromUserId(
     guildId: string,
     guildMemberId: string,
     cursor: number,
+    orderBy: OrderingType,
+    limit: number,
+  ): Promise<VoiceChannelStatusRecord[]>;
+
+  fetchLastFromUserIds(
+    guildId: string,
+    guildMemberIds: string[],
     orderBy: OrderingType,
     limit: number,
   ): Promise<VoiceChannelStatusRecord[]>;

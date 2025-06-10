@@ -1,7 +1,8 @@
 import { CommunicationPlatformImplModule } from '@infrastructure/communication-platform/communication-platform-impl.module';
 import { Module } from '@nestjs/common';
-import { RepositoryImplModule } from './../../infrastructure/repositories/repository-impl.module';
-import { GetLastUserVoiceChannelConnectionStatusQueryHandler } from './get-user-voice-connection-status/GetLastUserVoiceChannelConnectionStatusQueryHandler';
+import { RepositoryImplModule } from '../../infrastructure/repositories/repository-impl.module';
+import { GetLastRoleVoiceChannelConnectionStatusQueryHandler } from './get-last-role-voice-connection-status/GetLastRoleVoiceChannelConnectionStatusQueryHandler';
+import { GetLastUserVoiceChannelConnectionStatusQueryHandler } from './get-last-user-voice-connection-status/GetLastUserVoiceChannelConnectionStatusQueryHandler';
 import { SaveUserVoiceChannelStatusCommandHandler } from './save-user-voice-channel-status/SaveUserVoiceChannelStatusCommandHandler';
 
 @Module({
@@ -9,10 +10,12 @@ import { SaveUserVoiceChannelStatusCommandHandler } from './save-user-voice-chan
   providers: [
     SaveUserVoiceChannelStatusCommandHandler,
     GetLastUserVoiceChannelConnectionStatusQueryHandler,
+    GetLastRoleVoiceChannelConnectionStatusQueryHandler,
   ],
   exports: [
     SaveUserVoiceChannelStatusCommandHandler,
     GetLastUserVoiceChannelConnectionStatusQueryHandler,
+    GetLastRoleVoiceChannelConnectionStatusQueryHandler,
   ],
 })
-export class UserVoiceConnectionStatusModule {}
+export class VoiceConnectionStatusModule {}

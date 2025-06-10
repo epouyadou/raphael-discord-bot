@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common';
-import { UserVoiceConnectionStatusModule } from './user-voice-connection-status/user-voice-connection-status.module';
 import { VoiceChannelConnectionTrackingModule } from './voice-channel-connection-tracking/voice-channel-connection-tracking.module';
+import { VoiceConnectionStatusModule } from './voice-connection-status/voice-connection-status.module';
 
 @Module({
-  imports: [
-    VoiceChannelConnectionTrackingModule,
-    UserVoiceConnectionStatusModule,
-  ],
+  imports: [VoiceChannelConnectionTrackingModule, VoiceConnectionStatusModule],
 })
 export class ApplicationModule {}
