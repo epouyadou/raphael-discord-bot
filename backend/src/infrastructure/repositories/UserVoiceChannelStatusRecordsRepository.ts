@@ -14,7 +14,7 @@ export class UserVoiceChannelStatusRecordsRepository
 {
   constructor(private readonly postgres: PostgresPool) {}
 
-  async getFromUserIdAndGuildId(
+  async fetchAllFromUserId(
     guildId: string,
     guildMemberId: string,
     cursor: number,
@@ -37,6 +37,44 @@ export class UserVoiceChannelStatusRecordsRepository
       cursor,
       limit,
     ]);
+
+    return mapToUserVoiceChannelStatusRecords(result);
+  }
+
+  async fetchLastFromUserIds(
+    guildId: string,
+    guildMemberIds: string[],
+    orderBy: OrderingType,
+    limit: number,
+  ): Promise<VoiceChannelStatusRecord[]> {
+    if (guildMemberIds.length === 0) {
+      return Promise.resolve([]);
+    }
+
+    // const placeholders = guildMemberIds
+    //   .map((memberId) => `$${memberId}`)
+    //   .join(', ');
+
+    const query = `
+      SELECT *
+      FROM raphaeldb.voice_channel_status_records
+      WHERE guild_id = $1
+        AND guild_member_id = ANY($2)
+      ORDER BY id ${orderBy}
+      LIMIT $3
+    `;
+
+    const result = await this.postgres.query(query, [
+      guildId,
+      guildMemberIds,
+      limit,
+    ]);
+
+    console.log(
+      `Fetched ${result.rowCount} records for guild ${guildId} and members ${guildMemberIds.join(
+        ', ',
+      )} with order ${orderBy}`,
+    );
 
     return mapToUserVoiceChannelStatusRecords(result);
   }
