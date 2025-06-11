@@ -62,6 +62,13 @@ This will rebuild and run the containers.
       - `ROLE` mention: display the last connection of the users with the mentioned role
     - (optional) order: `ASC` (older to newest) or `DESC` (newest to older)
     - (optional) from and to: period constrains
+- Add the command `/disable tracking` to temporarily disable the tracking:
+  - Args:
+    - `duration`: `1s`, `30m`, `1h`, etc...
+    - `mention` : `GuildMember` or `Role` to disable a specific tracking
+- Add the command `/enable tracking` to reenable tracking.
+  - Args:
+    - `mention` : `GuildMember` or `Role` to disable a specific tracking
 - Add the command `/rank` to display ranking of divers informations:
   - Sub-commands: 
     - `time-spend-connected-in-voice-channels`:  Display the ranking of users order by how many time the user has spend time in the guild voice channels
