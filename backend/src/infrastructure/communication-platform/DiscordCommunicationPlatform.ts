@@ -178,7 +178,6 @@ export class DiscordCommunicationPlatform implements ICommunicationPlatform {
       return []; // Role not found
     }
 
-    console.log(`The role ${role.name} has ${role.members.size} members.`);
     return role.members.map((member) => member.id);
   }
 

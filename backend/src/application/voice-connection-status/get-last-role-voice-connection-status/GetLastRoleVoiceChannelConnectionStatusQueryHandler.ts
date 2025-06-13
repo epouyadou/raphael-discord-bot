@@ -36,8 +36,6 @@ export class GetLastRoleVoiceChannelConnectionStatusQueryHandler {
       roleId,
     );
 
-    console.log('User IDs count:', userIds.length);
-
     if (userIds.length === 0) {
       return {
         userVoiceConnectionStatus: [],
@@ -50,8 +48,6 @@ export class GetLastRoleVoiceChannelConnectionStatusQueryHandler {
       orderedBy || OrderingType.DESC,
       GetLastRoleVoiceChannelConnectionStatusQueryHandler.QUERY_LIMIT,
     );
-
-    console.log('Fetched records count:', records.length);
 
     if (records.length === 0) {
       return {
@@ -66,8 +62,6 @@ export class GetLastRoleVoiceChannelConnectionStatusQueryHandler {
 
     const filteredRecords: VoiceChannelStatusRecord[] =
       await visibleVoiceChannelFilter.getVisiblesByUser(guildId, querierId);
-
-    console.log('Filtered records count:', filteredRecords.length);
 
     return {
       userVoiceConnectionStatus: filteredRecords,

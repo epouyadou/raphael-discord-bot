@@ -70,12 +70,6 @@ export class UserVoiceChannelStatusRecordsRepository
       limit,
     ]);
 
-    console.log(
-      `Fetched ${result.rowCount} records for guild ${guildId} and members ${guildMemberIds.join(
-        ', ',
-      )} with order ${orderBy}`,
-    );
-
     return mapToUserVoiceChannelStatusRecords(result);
   }
 
