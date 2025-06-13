@@ -113,8 +113,6 @@ export class RoleBasedVoiceChannelConnectionTrackingOrdersRepository
       trackedGuildRoleId,
     ]);
 
-    console.log(JSON.stringify(result, null, 2));
-
     return result.rowCount !== null && result.rowCount > 0;
   }
 
