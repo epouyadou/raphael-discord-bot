@@ -52,15 +52,7 @@ This will rebuild and run the containers.
 
 ## Roadmap
 - Add the command `/log voice-connection` to display the last voice connection in the guild:
-  - Specifications:
-    - Exclude channel that the invoker don't see.
-    - Pagination
   - Args:
-    - Without: Display the last guild member voice connections in DESC order (newest to older)
-    - (optional) mention: 
-      - `USER` mention: display the last connection of the user
-      - `ROLE` mention: display the last connection of the users with the mentioned role
-    - (optional) order: `ASC` (older to newest) or `DESC` (newest to older)
     - (optional) from and to: period constrains
 - Add the command `/disable tracking` to temporarily disable the tracking:
   - Args:
