@@ -16,8 +16,12 @@ services:
       DB_NAME: ${DB_NAME}
       DB_USER: ${DB_USER}
       DB_USER_PASSWORD: ${DB_USER_PASSWORD}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis}
     depends_on:
       # Wait for the database to be ready before starting the backend
+      - redis
       - postgres
     restart: always
   
@@ -34,4 +38,13 @@ services:
       - ./database:/datamodel
       # Persist the database data on the disk and not in a volume
       - ./database/data:/var/lib/postgresql/data
+    restart: always
+
+  redis:
+    container_name: raphael-redis
+    image: redis:7.4.1
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis}
+    ports:
+      - "6379:6379"
     restart: always

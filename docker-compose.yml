@@ -17,11 +17,16 @@ services:
       DB_NAME: ${DB_NAME:-database}
       DB_USER: ${DB_USER:-database}
       DB_USER_PASSWORD: ${DB_USER_PASSWORD:-database}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis}
     ports:
       - "8080:3000"
     depends_on:
       # Wait for the database to be ready before starting the backend
       - postgres
+      - redis
+      
 
   postgres:
     container_name: raphael-postgresql
@@ -39,6 +44,13 @@ services:
       - pg_data:/var/lib/postgresql/data
     restart: on-failure
 
+  redis:
+    container_name: raphael-redis
+    image: redis:7.4.1
+    ports:
+      - "6379:6379"
+    restart: on-failure
+
   adminer:
     container_name: raphael-adminer
     image: adminer:4.8.1
@@ -50,3 +62,4 @@ services:
 
 volumes:
   pg_data:
+  redis_data:
