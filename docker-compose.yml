@@ -19,7 +19,7 @@ services:
       DB_USER_PASSWORD: ${DB_USER_PASSWORD:-database}
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      REDIS_PASSWORD: ${REDIS_PASSWORD:-redis}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:
       - "8080:3000"
     depends_on:
@@ -47,6 +47,8 @@ services:
   redis:
     container_name: raphael-redis
     image: redis:7.4.1
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
     ports:
       - "6379:6379"
     restart: on-failure
