@@ -23,6 +23,9 @@ export const environmentSchema = z.object({
     .string()
     .default('false')
     .transform((val) => val.toLowerCase() === 'true'),
+
+  REDIS_URL: z.string().min(1),
+  REDIS_PASSWORD: z.string().min(1).optional(),
 });
 
 let env: z.infer<typeof environmentSchema> | undefined;
