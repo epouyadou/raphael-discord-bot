@@ -6,6 +6,11 @@ import {
 import { GetUserTrackingConnectionOrdersQueryHandler } from '@application/voice-channel-connection-tracking/get-user-tracking-connection-orders/GetUserTrackingConnectionOrdersQueryHandler';
 import { GetUsersTrackingRoleConnectionQuery } from '@application/voice-channel-connection-tracking/get-users-tracking-role-connection/GetUsersTrackingRoleConnectionQuery';
 import { GetUsersTrackingRoleConnectionQueryHandler } from '@application/voice-channel-connection-tracking/get-users-tracking-role-connection/GetUsersTrackingRoleConnectionQueryHandler';
+import {
+  formatGuildRole,
+  formatGuildUser,
+} from '@domain/core/formatters/discord_formatter';
+import { StringBuilder } from '@domain/core/formatters/string_builder';
 import { Logger } from '@nestjs/common';
 import { GuildMember, Role, User } from 'discord.js';
 import {
@@ -15,11 +20,6 @@ import {
   SlashCommandContext,
   Subcommand,
 } from 'necord';
-import {
-  formatGuildRole,
-  formatGuildUser,
-} from 'src/core/utils/discord_formatter';
-import { StringBuilder } from 'src/core/utils/string_builder';
 import { TrackingGroupCommandDecorator } from '../TrackingGroupCommandDecorator';
 import { TrackerInformation } from './../../../../../application/voice-channel-connection-tracking/get-user-tracking-connection-orders/GetUserTrackingConnectionOrdersQuery';
 

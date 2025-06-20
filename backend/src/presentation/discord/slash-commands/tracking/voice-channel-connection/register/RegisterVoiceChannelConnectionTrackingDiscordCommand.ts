@@ -2,6 +2,11 @@ import { RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommand } from '@app
 import { RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler } from '@application/voice-channel-connection-tracking/register-role-based-voice-channel-connection-tracking/RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler';
 import { RegisterUserBasedVoiceChannelConnexionTrackingOrderCommand } from '@application/voice-channel-connection-tracking/register-user-based-voice-channel-connection-tracking/RegisterUserBasedVoiceChannelConnexionTrackingOrderCommand';
 import { RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler } from '@application/voice-channel-connection-tracking/register-user-based-voice-channel-connection-tracking/RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler';
+import {
+  formatGuildRole,
+  formatGuildUser,
+} from '@domain/core/formatters/discord_formatter';
+import { StringBuilder } from '@domain/core/formatters/string_builder';
 import { Logger } from '@nestjs/common';
 import {
   CacheType,
@@ -19,11 +24,6 @@ import {
   SlashCommandContext,
   Subcommand,
 } from 'necord';
-import {
-  formatGuildRole,
-  formatGuildUser,
-} from 'src/core/utils/discord_formatter';
-import { StringBuilder } from 'src/core/utils/string_builder';
 import { TrackingGroupCommandDecorator } from '../../TrackingGroupCommandDecorator';
 
 export class NotifyMeOnVoiceChannelConnectionDto {

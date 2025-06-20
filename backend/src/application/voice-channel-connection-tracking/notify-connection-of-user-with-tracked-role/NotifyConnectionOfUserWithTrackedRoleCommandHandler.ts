@@ -1,18 +1,18 @@
 import {
-  ICommunicationPlatform,
-  ICommunicationPlatformSymbol,
+    ICommunicationPlatform,
+    ICommunicationPlatformSymbol,
 } from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import {
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    formatGuildChannelLink,
+    formatGuildRoles,
+    formatGuildUser,
+} from '@domain/core/formatters/discord_formatter';
+import {
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
-import {
-  formatGuildChannelLink,
-  formatGuildRoles,
-  formatGuildUser,
-} from 'src/core/utils/discord_formatter';
 import { NotifyConnectionOfUserWithTrackedRoleCommand } from './NotifyConnectionOfUserWithTrackedRoleCommand';
 
 @Injectable()

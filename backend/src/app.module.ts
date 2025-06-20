@@ -6,7 +6,7 @@ import { DiscordModule } from '@presentation/discord/discord.module';
 import { IntentsBitField } from 'discord.js';
 import { NecordModule } from 'necord';
 import { AppService } from './app.service';
-import { getEnv } from './core/utils/env';
+import { getEnv } from './domain/core/utils/env';
 
 @Module({
   imports: [

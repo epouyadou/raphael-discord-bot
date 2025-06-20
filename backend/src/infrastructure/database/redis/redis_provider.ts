@@ -1,5 +1,5 @@
+import { getEnv } from '@domain/core/utils/env';
 import { createClientPool, RedisClientPoolType } from 'redis';
-import { getEnv } from 'src/core/utils/env';
 
 export const REDIS_CLIENT_POOL = Symbol('RedisClientPool');
 export type RedisPool = RedisClientPoolType;

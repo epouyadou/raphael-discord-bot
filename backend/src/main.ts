@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { formatError, validateEnvVariables } from './core/utils/env';
+import { formatError, validateEnvVariables } from './domain/core/utils/env';
 
 async function bootstrap() {
   try {
