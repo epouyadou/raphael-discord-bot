@@ -1,5 +1,9 @@
 import { DeregisterVoiceChannelConnectionTrackingCommand } from '@application/voice-channel-connection-tracking/deregister-voice-channel-connection-tracking/DeregisterVoiceChannelConnectionTrackingCommand';
 import { DeregisterVoiceChannelConnectionTrackingCommandHandler } from '@application/voice-channel-connection-tracking/deregister-voice-channel-connection-tracking/DeregisterVoiceChannelConnectionTrackingCommandHandler';
+import {
+  formatGuildRole,
+  formatGuildUser,
+} from '@domain/core/formatters/discord_formatter';
 import { Logger } from '@nestjs/common';
 import { GuildMember, MessageFlags, Role, User } from 'discord.js';
 import {
@@ -9,10 +13,6 @@ import {
   SlashCommandContext,
   Subcommand,
 } from 'necord';
-import {
-  formatGuildRole,
-  formatGuildUser,
-} from 'src/core/utils/discord_formatter';
 import { TrackingGroupCommandDecorator } from '../../TrackingGroupCommandDecorator';
 
 export class DeregisterTargetDto {

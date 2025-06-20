@@ -6,6 +6,10 @@ import { GetLastRoleVoiceChannelConnectionStatusQuery } from '@application/voice
 import { GetLastRoleVoiceChannelConnectionStatusQueryHandler } from '@application/voice-connection-status/get-last-role-voice-connection-status/GetLastRoleVoiceChannelConnectionStatusQueryHandler';
 import { GetLastUserVoiceChannelConnectionStatusQuery } from '@application/voice-connection-status/get-last-user-voice-connection-status/GetLastUserVoiceChannelConnectionStatusQuery';
 import { GetLastUserVoiceChannelConnectionStatusQueryHandler } from '@application/voice-connection-status/get-last-user-voice-connection-status/GetLastUserVoiceChannelConnectionStatusQueryHandler';
+import {
+  formatGuildUser,
+  formatVoiceChannel,
+} from '@domain/core/formatters/discord_formatter';
 import { OrderingType } from '@domain/core/primitives/OrderingType';
 import { VoiceChannelStatusRecord } from '@domain/voice-channel-status-records/VoiceChannelStatusRecord';
 import { Inject, Logger } from '@nestjs/common';
@@ -26,10 +30,6 @@ import {
   StringOption,
   Subcommand,
 } from 'necord';
-import {
-  formatGuildUser,
-  formatVoiceChannel,
-} from 'src/core/utils/discord_formatter';
 import { LogGroupCommandDecorator } from '../LogGroupCommandDecorator';
 
 export class LogUserVoiceConnectionStatusTargetDto {

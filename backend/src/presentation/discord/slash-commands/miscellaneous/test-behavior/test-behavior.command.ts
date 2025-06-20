@@ -2,10 +2,10 @@ import {
   ICommunicationPlatform,
   ICommunicationPlatformSymbol,
 } from '@application/abstractions/communication-platform/ICommunicationPlatform';
+import { getEnv } from '@domain/core/utils/env';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import { MessageFlags } from 'discord.js';
 import { Context, SlashCommand, SlashCommandContext } from 'necord';
-import { getEnv } from 'src/core/utils/env';
 
 @Injectable()
 export class TestBehaviorCommand {
