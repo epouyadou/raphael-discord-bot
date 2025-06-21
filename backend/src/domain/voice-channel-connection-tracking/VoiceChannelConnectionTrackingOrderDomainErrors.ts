@@ -29,4 +29,9 @@ export class VoiceChannelConnectionTrackingOrderDomainErrors {
     'VoiceChannelConnectionTrackingOrderDomainErrors.UserNotInGuild',
     'The mentioned user is not in the guild. Are you sure they are a member of this server?',
   );
+
+  static readonly FailedToDisableTracking = new BotError(
+    'VoiceChannelConnectionTrackingOrderDomainErrors.FailedToDisableTracking',
+    'Failed to disable tracking. Please try again later. If the problem persists, contact support.',
+  );
 }
