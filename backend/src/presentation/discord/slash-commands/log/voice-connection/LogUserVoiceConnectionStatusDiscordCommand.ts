@@ -1,34 +1,34 @@
 import {
-  IDateTimeFormatter,
-  IDateTimeFormatterSymbol,
+    DATE_TIME_FORMATTER_SYMBOL,
+    IDateTimeFormatter,
 } from '@application/abstractions/common/IDateTimeFormatter';
 import { GetLastRoleVoiceChannelConnectionStatusQuery } from '@application/voice-connection-status/get-last-role-voice-connection-status/GetLastRoleVoiceChannelConnectionStatusQuery';
 import { GetLastRoleVoiceChannelConnectionStatusQueryHandler } from '@application/voice-connection-status/get-last-role-voice-connection-status/GetLastRoleVoiceChannelConnectionStatusQueryHandler';
 import { GetLastUserVoiceChannelConnectionStatusQuery } from '@application/voice-connection-status/get-last-user-voice-connection-status/GetLastUserVoiceChannelConnectionStatusQuery';
 import { GetLastUserVoiceChannelConnectionStatusQueryHandler } from '@application/voice-connection-status/get-last-user-voice-connection-status/GetLastUserVoiceChannelConnectionStatusQueryHandler';
 import {
-  formatGuildUser,
-  formatVoiceChannel,
+    formatGuildUser,
+    formatVoiceChannel,
 } from '@domain/core/formatters/discord_formatter';
 import { OrderingType } from '@domain/core/primitives/OrderingType';
 import { VoiceChannelStatusRecord } from '@domain/voice-channel-status-records/VoiceChannelStatusRecord';
 import { Inject, Logger } from '@nestjs/common';
 import {
-  CacheType,
-  ChatInputCommandInteraction,
-  GuildMember,
-  MessageFlags,
-  Role,
-  Snowflake,
-  User,
+    CacheType,
+    ChatInputCommandInteraction,
+    GuildMember,
+    MessageFlags,
+    Role,
+    Snowflake,
+    User,
 } from 'discord.js';
 import {
-  Context,
-  MentionableOption,
-  Options,
-  SlashCommandContext,
-  StringOption,
-  Subcommand,
+    Context,
+    MentionableOption,
+    Options,
+    SlashCommandContext,
+    StringOption,
+    Subcommand,
 } from 'necord';
 import { LogGroupCommandDecorator } from '../LogGroupCommandDecorator';
 
@@ -68,7 +68,7 @@ export class LogUserVoiceConnectionStatusDiscordCommand {
   constructor(
     private readonly getLastUserVoiceConnectionStatusQueryHandler: GetLastUserVoiceChannelConnectionStatusQueryHandler,
     private readonly getLastRoleVoiceConnectionStatusQueryHandler: GetLastRoleVoiceChannelConnectionStatusQueryHandler,
-    @Inject(IDateTimeFormatterSymbol)
+    @Inject(DATE_TIME_FORMATTER_SYMBOL)
     private readonly dateTimeFromatter: IDateTimeFormatter,
   ) {}
 

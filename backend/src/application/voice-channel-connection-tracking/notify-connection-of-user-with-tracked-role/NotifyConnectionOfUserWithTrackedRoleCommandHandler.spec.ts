@@ -1,10 +1,10 @@
 import {
-  ICommunicationPlatform,
-  ICommunicationPlatformSymbol,
+    COMMUNICATION_PLATFORM_SYMBOL,
+    ICommunicationPlatform,
 } from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import {
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { RoleBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
 import { DiscordCommunicationPlatformProvider } from '@infrastructure/communication-platform/DiscordCommunicationPlatform';
@@ -62,7 +62,7 @@ describe('NotifyConnectionOfUserWithTrackedRoleCommandHandler', () => {
     saveSpy.mockResolvedValue(() => Promise.resolve(true));
 
     communicationPlatform = moduleRef.get<ICommunicationPlatform>(
-      ICommunicationPlatformSymbol,
+      COMMUNICATION_PLATFORM_SYMBOL,
     );
 
     communicationPlatformIsInVoiceChannelSpy = jest.spyOn(

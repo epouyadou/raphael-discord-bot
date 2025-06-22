@@ -1,4 +1,4 @@
-export const IDateTimeFormatterSymbol = Symbol('IDateTimeFormatter');
+export const DATE_TIME_FORMATTER_SYMBOL = Symbol('IDateTimeFormatter');
 
 export interface IDateTimeFormatter {
   formatDateTime(date: Date): string;

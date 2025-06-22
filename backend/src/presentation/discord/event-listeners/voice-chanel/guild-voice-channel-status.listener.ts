@@ -50,6 +50,7 @@ export class GuildVoiceChannelStatusListener {
       });
 
     if (!guild) {
+      this.logger.error(`Guild with ID ${voiceChannel.guildId} not found.`);
       return;
     }
 

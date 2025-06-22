@@ -1,6 +1,6 @@
 import {
+    COMMUNICATION_PLATFORM_SYMBOL,
     ICommunicationPlatform,
-    ICommunicationPlatformSymbol,
 } from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import {
     formatGuildChannelLink,
@@ -22,7 +22,7 @@ export class NotifyConnectionOfUserWithTrackedRoleCommandHandler {
   );
 
   constructor(
-    @Inject(ICommunicationPlatformSymbol)
+    @Inject(COMMUNICATION_PLATFORM_SYMBOL)
     private readonly communicationPlatform: ICommunicationPlatform,
     @Inject(IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
     private readonly repository: IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,

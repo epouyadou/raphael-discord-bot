@@ -1,6 +1,6 @@
 import {
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+    USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { UserBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/UserBasedVoiceChannelConnectionTrackingOrder';
 import { PostgresPool } from '@infrastructure/database/postgres/postgres';
@@ -130,6 +130,6 @@ export class UserBasedVoiceChannelConnectionTrackingOrdersRepository
 }
 
 export const UserBasedVoiceChannelConnectionTrackingOrdersRepositoryProvider = {
-  provide: IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+  provide: USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
   useClass: UserBasedVoiceChannelConnectionTrackingOrdersRepository,
 };

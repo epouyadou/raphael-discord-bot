@@ -1,18 +1,18 @@
 import { OrderingType } from '@domain/core/primitives/OrderingType';
 import {
-  IUserVoiceChannelStatusRecordsRepository,
-  IUserVoiceChannelStatusRecordsRepositorySymbol,
+    IUserVoiceChannelStatusRecordsRepository,
+    IUserVoiceChannelStatusRecordsRepositorySymbol,
 } from '@domain/voice-channel-status-records/IUserVoiceChannelStatusRecordsRepository';
 import { VisibleVoiceChannelFilter } from '@domain/voice-channel-status-records/VisibleVoiceChannelSingleCommandCache';
 import { VoiceChannelStatusRecord } from '@domain/voice-channel-status-records/VoiceChannelStatusRecord';
 import { Inject, Injectable } from '@nestjs/common';
 import {
-  ICommunicationPlatform,
-  ICommunicationPlatformSymbol,
+    COMMUNICATION_PLATFORM_SYMBOL,
+    ICommunicationPlatform,
 } from './../../abstractions/communication-platform/ICommunicationPlatform';
 import {
-  GetLastUserVoiceChannelConnectionStatusQuery,
-  GetLastUserVoiceChannelConnectionsQueryResult,
+    GetLastUserVoiceChannelConnectionStatusQuery,
+    GetLastUserVoiceChannelConnectionsQueryResult,
 } from './GetLastUserVoiceChannelConnectionStatusQuery';
 
 @Injectable()
@@ -22,7 +22,7 @@ export class GetLastUserVoiceChannelConnectionStatusQueryHandler {
   constructor(
     @Inject(IUserVoiceChannelStatusRecordsRepositorySymbol)
     private readonly repository: IUserVoiceChannelStatusRecordsRepository,
-    @Inject(ICommunicationPlatformSymbol)
+    @Inject(COMMUNICATION_PLATFORM_SYMBOL)
     private readonly communicationPlatform: ICommunicationPlatform,
   ) {}
 

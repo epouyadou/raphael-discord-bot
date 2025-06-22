@@ -1,36 +1,36 @@
 import {
-  ICommunicationPlatform,
-  ICommunicationPlatformSymbol,
+    COMMUNICATION_PLATFORM_SYMBOL,
+    ICommunicationPlatform,
 } from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import { TypedResult } from '@domain/core/primitives/TypedResult';
 import {
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import {
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+    USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { VoiceChannelConnectionTrackingOrderDomainErrors } from '@domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
 import { Inject, Injectable } from '@nestjs/common';
 import { Snowflake } from '@shared/types/snowflake';
 import {
-  GetUserTrackingConnectionOrdersQuery,
-  GetUserTrackingConnectionOrdersQueryResult,
-  TrackedRoleInformation,
-  TrackedUserInformation,
-  TrackerInformation,
-  TrackerType,
+    GetUserTrackingConnectionOrdersQuery,
+    GetUserTrackingConnectionOrdersQueryResult,
+    TrackedRoleInformation,
+    TrackedUserInformation,
+    TrackerInformation,
+    TrackerType,
 } from './GetUserTrackingConnectionOrdersQuery';
 
 @Injectable()
 export class GetUserTrackingConnectionOrdersQueryHandler {
   constructor(
-    @Inject(IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
+    @Inject(USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL)
     private readonly userBasedVCCTORepository: IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
     @Inject(IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
     private readonly roleBasedVCCTORepository: IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-    @Inject(ICommunicationPlatformSymbol)
+    @Inject(COMMUNICATION_PLATFORM_SYMBOL)
     private readonly communicationPlatform: ICommunicationPlatform,
   ) {}
 

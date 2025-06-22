@@ -1,13 +1,13 @@
 import { getEnv } from '@domain/core/utils/env';
 import { createClientPool, RedisClientPoolType } from 'redis';
 
-export const REDIS_CLIENT_POOL = Symbol('RedisClientPool');
+export const REDIS_CLIENT_POOL_SYMBOL = Symbol('RedisClientPool');
 export type RedisPool = RedisClientPoolType;
 
 let pool: RedisPool | undefined;
 
 export const redisProvider = {
-  provide: REDIS_CLIENT_POOL,
+  provide: REDIS_CLIENT_POOL_SYMBOL,
   useFactory: async () => {
     if (pool) {
       return pool;

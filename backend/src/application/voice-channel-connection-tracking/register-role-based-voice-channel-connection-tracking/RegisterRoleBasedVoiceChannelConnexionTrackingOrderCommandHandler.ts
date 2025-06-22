@@ -1,11 +1,11 @@
 import {
-  IDateTime,
-  IDateTimeSymbol,
+    DATE_TIME_SYMBOL,
+    IDateTime,
 } from '@application/abstractions/common/IDateTime';
 import { Result } from '@domain/core/primitives/Result';
 import {
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { RoleBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/RoleBasedVoiceChannelConnectionTrackingOrder';
 import { VoiceChannelConnectionTrackingOrderDomainErrors } from '@domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
@@ -21,7 +21,7 @@ export class RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler {
   constructor(
     @Inject(IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
     private readonly repository: IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-    @Inject(IDateTimeSymbol)
+    @Inject(DATE_TIME_SYMBOL)
     private readonly dateTimeProvider: IDateTime,
   ) {}
 
