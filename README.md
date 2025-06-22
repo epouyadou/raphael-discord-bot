@@ -51,6 +51,7 @@ This will rebuild and run the containers.
 - `.github` Github Actions CI/CD
 
 ## Roadmap
+- Considering using events to have a much cleaner code and respecting SOLID principles.
 - Add the command `/log voice-connection` to display the last voice connection in the guild:
   - Args:
     - (optional) from and to: period constrains
