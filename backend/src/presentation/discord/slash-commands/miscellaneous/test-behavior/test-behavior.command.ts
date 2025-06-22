@@ -1,6 +1,6 @@
 import {
-  ICommunicationPlatform,
-  ICommunicationPlatformSymbol,
+    COMMUNICATION_PLATFORM_SYMBOL,
+    ICommunicationPlatform,
 } from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import { getEnv } from '@domain/core/utils/env';
 import { Inject, Injectable, Logger } from '@nestjs/common';
@@ -12,7 +12,7 @@ export class TestBehaviorCommand {
   private readonly logger = new Logger(TestBehaviorCommand.name);
 
   constructor(
-    @Inject(ICommunicationPlatformSymbol)
+    @Inject(COMMUNICATION_PLATFORM_SYMBOL)
     private readonly communicationPlatform: ICommunicationPlatform,
   ) {}
 

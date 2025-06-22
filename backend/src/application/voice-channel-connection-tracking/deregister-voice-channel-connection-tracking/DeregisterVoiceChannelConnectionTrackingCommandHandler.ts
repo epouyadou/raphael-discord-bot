@@ -1,11 +1,11 @@
 import { Result } from '@domain/core/primitives/Result';
 import {
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import {
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+    USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { VoiceChannelConnectionTrackingOrderDomainErrors } from '@domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
 import { Inject, Injectable, Logger } from '@nestjs/common';
@@ -20,7 +20,7 @@ export class DeregisterVoiceChannelConnectionTrackingCommandHandler {
   constructor(
     @Inject(IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
     private readonly roleBasedVCCTRepository: IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-    @Inject(IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
+    @Inject(USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL)
     private readonly userBasedVCCTRepository: IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
   ) {}
 

@@ -29,4 +29,13 @@ export class VoiceChannelConnectionTrackingOrderDomainErrors {
     'VoiceChannelConnectionTrackingOrderDomainErrors.UserNotInGuild',
     'The mentioned user is not in the guild. Are you sure they are a member of this server?',
   );
+
+  static readonly FailedToDisableTracking = new BotError(
+    'VoiceChannelConnectionTrackingOrderDomainErrors.FailedToDisableTracking',
+    'Failed to disable tracking. Please try again later. If the problem persists, contact support.',
+  );
+  static readonly InvalidDuration = new BotError(
+    'VoiceChannelConnectionTrackingOrderDomainErrors.InvalidDuration',
+    'The provided duration is invalid. Please provide a valid duration in the format "1h", "30m", "15s", etc. (available units: s = second, m = minute, h = hour, d = day, w = week, M = month, Y = year). ) If you want to disable tracking indefinitely do not provide a duration.',
+  );
 }

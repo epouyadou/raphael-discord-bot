@@ -1,6 +1,6 @@
 import {
-  IDateTimeFormatter,
-  IDateTimeFormatterSymbol,
+    DATE_TIME_FORMATTER_SYMBOL,
+    IDateTimeFormatter,
 } from '@application/abstractions/common/IDateTimeFormatter';
 
 export class IntlDateTimeFormmatter implements IDateTimeFormatter {
@@ -54,6 +54,6 @@ export class IntlDateTimeFormmatter implements IDateTimeFormatter {
 }
 
 export const IntlDateTimeFormmatterProvider = {
-  provide: IDateTimeFormatterSymbol,
+  provide: DATE_TIME_FORMATTER_SYMBOL,
   useClass: IntlDateTimeFormmatter,
 };

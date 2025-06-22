@@ -3,6 +3,7 @@ import { CommunicationPlatformImplModule } from '@infrastructure/communication-p
 import { RepositoryImplModule } from '@infrastructure/repositories/repository-impl.module';
 import { Module } from '@nestjs/common';
 import { DeregisterVoiceChannelConnectionTrackingCommandHandler } from './deregister-voice-channel-connection-tracking/DeregisterVoiceChannelConnectionTrackingCommandHandler';
+import { DisableTrackingCommandHandler } from './disable-tracking/DisableTrackingCommandHandler';
 import { GetUserTrackingConnectionOrdersQueryHandler } from './get-user-tracking-connection-orders/GetUserTrackingConnectionOrdersQueryHandler';
 import { GetUsersTrackingRoleConnectionQueryHandler } from './get-users-tracking-role-connection/GetUsersTrackingRoleConnectionQueryHandler';
 import { NotifyConnectionOfTrackedUserCommandHandler } from './notify-connection-of-tracked-user/NotifyConnectionOfTrackedUserCommandHandler';
@@ -17,18 +18,20 @@ import { RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler } fro
     CommunicationPlatformImplModule,
   ],
   providers: [
+    DeregisterVoiceChannelConnectionTrackingCommandHandler,
+    DisableTrackingCommandHandler,
     GetUserTrackingConnectionOrdersQueryHandler,
     GetUsersTrackingRoleConnectionQueryHandler,
-    DeregisterVoiceChannelConnectionTrackingCommandHandler,
     NotifyConnectionOfTrackedUserCommandHandler,
     NotifyConnectionOfUserWithTrackedRoleCommandHandler,
     RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler,
     RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler,
   ],
   exports: [
+    DeregisterVoiceChannelConnectionTrackingCommandHandler,
+    DisableTrackingCommandHandler,
     GetUserTrackingConnectionOrdersQueryHandler,
     GetUsersTrackingRoleConnectionQueryHandler,
-    DeregisterVoiceChannelConnectionTrackingCommandHandler,
     NotifyConnectionOfTrackedUserCommandHandler,
     NotifyConnectionOfUserWithTrackedRoleCommandHandler,
     RegisterRoleBasedVoiceChannelConnexionTrackingOrderCommandHandler,

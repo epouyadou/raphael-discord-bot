@@ -1,11 +1,11 @@
 import {
-  IDateTime,
-  IDateTimeSymbol,
+    DATE_TIME_SYMBOL,
+    IDateTime,
 } from '@application/abstractions/common/IDateTime';
 import { Result } from '@domain/core/primitives/Result';
 import {
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+    USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { VoiceChannelConnectionTrackingOrderDomainErrors } from '@domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
 import { Inject, Injectable, Logger } from '@nestjs/common';
@@ -20,9 +20,9 @@ export class RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler {
   );
 
   constructor(
-    @Inject(IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
+    @Inject(USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL)
     private readonly repository: IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
-    @Inject(IDateTimeSymbol)
+    @Inject(DATE_TIME_SYMBOL)
     private readonly dateTimeProvider: IDateTime,
   ) {}
 

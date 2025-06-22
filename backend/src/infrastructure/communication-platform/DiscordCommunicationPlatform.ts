@@ -1,17 +1,17 @@
 import { ICommunicationPlatform } from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import {
-  Client,
-  DiscordAPIError,
-  Guild,
-  GuildMember,
-  PermissionFlagsBits,
-  Role,
-  Snowflake,
-  User,
-  VoiceChannel,
+    Client,
+    DiscordAPIError,
+    Guild,
+    GuildMember,
+    PermissionFlagsBits,
+    Role,
+    Snowflake,
+    User,
+    VoiceChannel,
 } from 'discord.js';
-import { ICommunicationPlatformSymbol } from './../../application/abstractions/communication-platform/ICommunicationPlatform';
+import { COMMUNICATION_PLATFORM_SYMBOL } from './../../application/abstractions/communication-platform/ICommunicationPlatform';
 
 @Injectable()
 export class DiscordCommunicationPlatform implements ICommunicationPlatform {
@@ -211,6 +211,6 @@ export class DiscordCommunicationPlatform implements ICommunicationPlatform {
 }
 
 export const DiscordCommunicationPlatformProvider = {
-  provide: ICommunicationPlatformSymbol,
+  provide: COMMUNICATION_PLATFORM_SYMBOL,
   useClass: DiscordCommunicationPlatform,
 };

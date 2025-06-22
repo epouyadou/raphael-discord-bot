@@ -1,6 +1,6 @@
 import {
-  IDateTime,
-  IDateTimeSymbol,
+    DATE_TIME_SYMBOL,
+    IDateTime,
 } from '@application/abstractions/common/IDateTime';
 
 export class MachineTime implements IDateTime {
@@ -14,6 +14,6 @@ export class MachineTime implements IDateTime {
 }
 
 export const MachineTimeProvider = {
-  provide: IDateTimeSymbol,
+  provide: DATE_TIME_SYMBOL,
   useClass: MachineTime,
 };

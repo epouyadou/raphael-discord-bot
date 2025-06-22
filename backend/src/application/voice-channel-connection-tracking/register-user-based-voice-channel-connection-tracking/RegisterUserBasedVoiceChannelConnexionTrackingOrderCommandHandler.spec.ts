@@ -1,6 +1,6 @@
 import {
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+    USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { MachineTimeProvider } from '@infrastructure/common/MachineTime';
 import { postgresProvider } from '@infrastructure/database/postgres/postgres.provider';
@@ -34,7 +34,7 @@ describe('RegisterUserBasedVoiceChannelConnexionTrackingOrderCommandHandler', ()
 
     userBasedVCCTRepository =
       moduleRef.get<IUserBasedVoiceChannelConnectionTrackingOrdersRepository>(
-        IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+        USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
       );
     saveSpy = jest.spyOn(userBasedVCCTRepository, 'save');
     saveSpy.mockResolvedValue(() => Promise.resolve());

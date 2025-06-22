@@ -1,11 +1,11 @@
 import { BotError } from '@domain/core/primitives/BotError';
 import {
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import {
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+    USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { VoiceChannelConnectionTrackingOrderDomainErrors } from '@domain/voice-channel-connection-tracking/VoiceChannelConnectionTrackingOrderDomainErrors';
 import { postgresProvider } from '@infrastructure/database/postgres/postgres.provider';
@@ -108,7 +108,7 @@ describe('DeregisterVoiceChannelConnectionTrackingCommandHandler', () => {
 
     userBasedVCCTRepository =
       moduleRef.get<IUserBasedVoiceChannelConnectionTrackingOrdersRepository>(
-        IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+        USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
       );
   });
 

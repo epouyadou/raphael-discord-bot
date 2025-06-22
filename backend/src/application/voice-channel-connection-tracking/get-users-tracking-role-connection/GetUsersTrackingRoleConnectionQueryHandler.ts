@@ -1,16 +1,16 @@
 import {
-  ICommunicationPlatform,
-  ICommunicationPlatformSymbol,
+    COMMUNICATION_PLATFORM_SYMBOL,
+    ICommunicationPlatform,
 } from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import { TypedResult } from '@domain/core/primitives/TypedResult';
 import {
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
+    IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
 } from '@domain/voice-channel-connection-tracking/IRoleBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { Inject, Injectable } from '@nestjs/common';
 import {
-  GetUsersTrackingRoleConnectionQuery,
-  GetUserTrackingConnectionOrdersQueryResult,
+    GetUsersTrackingRoleConnectionQuery,
+    GetUserTrackingConnectionOrdersQueryResult,
 } from './GetUsersTrackingRoleConnectionQuery';
 
 @Injectable()
@@ -18,7 +18,7 @@ export class GetUsersTrackingRoleConnectionQueryHandler {
   constructor(
     @Inject(IRoleBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol)
     private readonly roleBasedVCCTORepository: IRoleBasedVoiceChannelConnectionTrackingOrdersRepository,
-    @Inject(ICommunicationPlatformSymbol)
+    @Inject(COMMUNICATION_PLATFORM_SYMBOL)
     private readonly communicationPlatform: ICommunicationPlatform,
   ) {}
 

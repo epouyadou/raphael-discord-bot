@@ -1,7 +1,7 @@
 import { Snowflake } from '@shared/types/snowflake';
 import { UserBasedVoiceChannelConnectionTrackingOrder } from './UserBasedVoiceChannelConnectionTrackingOrder';
 
-export const IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol =
+export const USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL =
   Symbol('IUserBasedVoiceChannelConnectionTrackingOrdersRepository');
 
 export interface IUserBasedVoiceChannelConnectionTrackingOrdersRepository {

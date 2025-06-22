@@ -1,10 +1,10 @@
 import {
-  ICommunicationPlatform,
-  ICommunicationPlatformSymbol,
+    COMMUNICATION_PLATFORM_SYMBOL,
+    ICommunicationPlatform,
 } from '@application/abstractions/communication-platform/ICommunicationPlatform';
 import {
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
-  IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+    IUserBasedVoiceChannelConnectionTrackingOrdersRepository,
+    USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
 } from '@domain/voice-channel-connection-tracking/IUserBasedVoiceChannelConnectionTrackingOrdersRepository';
 import { UserBasedVoiceChannelConnectionTrackingOrder } from '@domain/voice-channel-connection-tracking/UserBasedVoiceChannelConnectionTrackingOrder';
 import { DiscordCommunicationPlatformProvider } from '@infrastructure/communication-platform/DiscordCommunicationPlatform';
@@ -44,11 +44,11 @@ describe('NotifyConnectionOfTrackedUserCommandHandler', () => {
 
     userBasedVCCTRepository =
       moduleRef.get<IUserBasedVoiceChannelConnectionTrackingOrdersRepository>(
-        IUserBasedVoiceChannelConnectionTrackingOrdersRepositorySymbol,
+        USER_BASED_VOICE_CHANNEL_CONNECTION_TRACKING_ORDER_REPOSITORY_SYMBOL,
       );
 
     communicationPlatform = moduleRef.get<ICommunicationPlatform>(
-      ICommunicationPlatformSymbol,
+      COMMUNICATION_PLATFORM_SYMBOL,
     );
 
     communicationPlatformIsInVoiceChannelSpy = jest.spyOn(
