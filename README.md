@@ -51,6 +51,7 @@ This will rebuild and run the containers.
 - `.github` Github Actions CI/CD
 
 ## Roadmap
+- Add an event bus to get rid of the ugly code that create to much coupling.
 - Add the command `/log voice-connection` to display the last voice connection in the guild:
   - Args:
     - (optional) from and to: period constrains
